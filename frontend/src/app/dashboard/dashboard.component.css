@@ -1,0 +1,17 @@
+.scene-controls {
+  display: inline-block;
+  padding: 16px 24px 4px;
+}
+
+.scenes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.preview-image, .live-image {
+  width: 800px;
+  margin-left: 16px;
+  margin-right: 16px;
+}

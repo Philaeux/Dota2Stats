@@ -1,7 +1,13 @@
-<mat-toolbar color="primary" class="mat-elevation-z6">
-  <button mat-button><mat-icon class="menu-icon">poll</mat-icon><span>Dota 2 Stats</span></button>
-  <button mat-button><mat-icon class="menu-icon">dashboard</mat-icon><span>Dashboard</span></button>
-  <button mat-button><mat-icon class="menu-icon">supervisor_account</mat-icon><span>Users</span></button>
-  <button mat-button><mat-icon class="menu-icon">all_inclusive</mat-icon><span>Teams</span></button>
+<mat-toolbar class="mat-elevation-z6" color="primary" >
+  <button mat-button routerLink="/"><mat-icon class="menu-icon">poll</mat-icon><span>Dota 2 Stats</span></button>
+  <button mat-button routerLink="/dashboard"><mat-icon class="menu-icon">dashboard</mat-icon><span>Dashboard</span></button>
+  <button mat-button routerLink="/users"><mat-icon class="menu-icon">supervisor_account</mat-icon><span>Users</span></button>
+
+  <span class="spacer"></span>
+  <button mat-button>
+    <img class="twitter-img" src="assets/img/mat-twitter.png" alt="Login with Twitter" aria-label="Login with Twitter">
+  </button>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="page-content">
+  <router-outlet></router-outlet>
+</div>

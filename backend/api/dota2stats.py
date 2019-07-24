@@ -1,4 +1,5 @@
 from tornado.web import Application, RequestHandler
+from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 class HelloHandler(RequestHandler):
@@ -9,11 +10,13 @@ class HelloHandler(RequestHandler):
 
 def make_app():
     urls = [
-        ("/", HelloHandler)
+        ("/api/", HelloHandler)
     ]
     return Application(urls, debug=True)
 
 if __name__ == '__main__':
     app = make_app()
-    app.listen(9999)
-    IOLoop.instance().start()
+    server = HTTPServer(app)
+    server.bind(9899)
+    server.start(1)
+    IOLoop.current().start()

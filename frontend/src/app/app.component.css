@@ -1,3 +1,16 @@
 .menu-icon {
   padding-right: 5px;
 }
+
+.twitter-img {
+  width: 36px;
+  height: 36px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.page-content {
+  margin: 32px;
+}

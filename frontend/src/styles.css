@@ -1,4 +1,4 @@
-@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 body {
   margin: 0;
@@ -7,6 +7,6 @@ body {
 
 html {
   height: 100%;
-  font-family: Roboto;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 

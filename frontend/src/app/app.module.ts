@@ -12,8 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatMenuModule} from "@angular/material";
+import {MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSelectModule} from "@angular/material";
 import { HomeComponent } from './home/home.component';
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -33,7 +34,12 @@ import { HomeComponent } from './home/home.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

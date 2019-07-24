@@ -1,0 +1,76 @@
+{
+  "teams": [
+    {
+      "id": 15,
+      "name": "PSG.LGD"
+    },
+    {
+      "id": 36,
+      "name": "Natus Vincere"
+    },
+    {
+      "id": 39,
+      "name": "Evil Geniuses"
+    },
+    {
+      "id": 2163,
+      "name": "Team Liquid"
+    },
+    {
+      "id": 111474,
+      "name": "Alliance"
+    },
+    {
+      "id": 350190,
+      "name": "Fnatic"
+    },
+    {
+      "id": 543897,
+      "name": "Mineski"
+    },
+    {
+      "id": 726228,
+      "name": "Vici Gaming"
+    },
+    {
+      "id": 1838315,
+      "name": "Team Secret"
+    },
+    {
+      "id": 1883502,
+      "name": "Virtus Pro"
+    },
+    {
+      "id": 2108395,
+      "name": "TNC Predator"
+    },
+    {
+      "id": 2586976,
+      "name": "OG"
+    },
+    {
+      "id": 2626685,
+      "name": "Keen Gaming"
+    },
+    {
+      "id": 5065748,
+      "name": "Infamous"
+    },
+    {
+      "id": 6209804,
+      "name": "Royal Never Give Up"
+    },
+    {
+      "id": 6214538,
+      "name": "Forward Gaming"
+    },
+    {
+      "id": 6214973,
+      "name": "Ninjas in Pyjamas"
+    },
+    {
+      "id": 6666989,
+      "name": "Chaos Esports Club"
+    }
+  ]
+}
