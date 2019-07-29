@@ -1,0 +1,9 @@
+<div class="live-container">
+  <img class="live-image"
+       [ngClass]="{'full-image': full_image, 'small-image': !full_image}"
+       [src]="live_img_src">
+  <img [@showHide]="fade_status"
+       class="live-image-fader"
+       [ngClass]="{'full-image': full_image, 'small-image': !full_image}"
+       [src]="live_img_fader_src">
+</div>

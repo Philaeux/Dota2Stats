@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseAPI: 'http://127.0.0.1:9899',
+  baseWS: 'ws://127.0.0.1:9899',
   baseWeb: 'http://127.0.0.1:4200'
 };
 

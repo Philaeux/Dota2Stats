@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { UsersComponent } from "./users/users.component";
 import { HomeComponent } from "./home/home.component";
+import {SceneComponent} from "./scene/scene.component";
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'users', component: UsersComponent }
+  { path: 'scene', component: SceneComponent }
 ];
 
 @NgModule({

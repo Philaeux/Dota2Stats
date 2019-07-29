@@ -1,6 +1,30 @@
+.scene-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.scene-controls-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
 .scene-controls {
-  display: inline-block;
-  padding: 16px 24px 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.control-separator {
+  margin-left: 10px;
+}
+
+.padded_field {
+  padding-left: 10px;
 }
 
 .scenes {
@@ -10,8 +34,23 @@
   margin-top: 16px;
 }
 
-.preview-image, .live-image {
+.preview-image, .live-container, .live-image, .live-image-fader {
   width: 800px;
+  height: 450px;
+}
+
+.preview-image, .live-container {
   margin-left: 16px;
   margin-right: 16px;
+}
+
+.live-container, .live-image{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.live-image-fader {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

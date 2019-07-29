@@ -1,2 +1,5 @@
-tornado
+alembic
+psycopg2-binary
 SQLAlchemy
+tornado
+tornado-sqlalchemy

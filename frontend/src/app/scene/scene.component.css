@@ -1,0 +1,21 @@
+.full-image {
+  width: 1920px;
+  height: 1080px;
+}
+
+.small-image {
+  width: 800px;
+  height: 450px;
+}
+
+.live-container, .live-image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.live-image-fader {
+  position: absolute;
+  top:0;
+  left: 0;
+}

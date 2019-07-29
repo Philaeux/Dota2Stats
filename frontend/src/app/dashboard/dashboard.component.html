@@ -1,37 +1,51 @@
-<div class="scene-controls mat-elevation-z6">
+<div class="scene-container">
 
-  <mat-form-field>
-    <mat-select placeholder="Image Type" [(ngModel)]="image_type" (selectionChange)="image_type_changed($event)">
-      <mat-option value="static_teams">Static Teams</mat-option>
-      <mat-option value="group_stage">Group Stage</mat-option>
-      <mat-option value="post_game">Post Game</mat-option>
-      <mat-option value="tournament_global">Tournament Globals</mat-option>
-      <mat-option value="team_face_off">Team Face-off</mat-option>
-    </mat-select>
-  </mat-form-field> &nbsp;
+  <div class="scene-controls-container mat-elevation-z1">
 
-  <mat-form-field *ngIf="image_type == 'static_teams' || image_type == 'team_face_off'">
-    <mat-select placeholder="Team" [(ngModel)]="selected_team" (selectionChange)="selected_team_changed($event)">
-      <mat-option *ngFor="let row of teams" [value]="row[0]">
-        {{row[1]}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> &nbsp;
-  <mat-form-field *ngIf="image_type == 'team_face_off'">
-    <mat-select placeholder="Team 2" [(ngModel)]="selected_team_2" (selectionChange)="selected_team_2_changed($event)">
-      <mat-option *ngFor="let row of teams" [value]="row[0]">
-        {{row[1]}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field> &nbsp;
+    <div class="scene-controls">
+      <mat-form-field>
+        <mat-select placeholder="Image Type" [(ngModel)]="image_type" (selectionChange)="rebuild_preview()">
+          <mat-option value="static_teams">Static Teams</mat-option>
+          <mat-option value="group_stage">Group Stage</mat-option>
+          <mat-option value="post_game">Post Game</mat-option>
+          <mat-option value="tournament_globals">Tournament Globals</mat-option>
+          <mat-option value="team_face_off">Team Face-off</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <mat-form-field *ngIf="image_type == 'post_game'">
-    <input matInput placeholder="Match Id" [(ngModel)]="game_id">
-  </mat-form-field> &nbsp;
+      <mat-form-field class="padded_field" *ngIf="image_type == 'static_teams' || image_type == 'team_face_off'">
+        <mat-select placeholder="Team" [(ngModel)]="selected_team" (selectionChange)="rebuild_preview()">
+          <mat-option *ngFor="let row of teams" [value]="row[0]">
+            {{row[1]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="padded_field" *ngIf="image_type == 'team_face_off'">
+        <mat-select placeholder="Team 2" [(ngModel)]="selected_team_2" (selectionChange)="rebuild_preview()">
+          <mat-option *ngFor="let row of teams" [value]="row[0]">
+            {{row[1]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-</div>
+      <mat-form-field class="padded_field" *ngIf="image_type == 'post_game'">
+        <input matInput placeholder="Match Id" [(ngModel)]="game_id">
+      </mat-form-field>
+    </div>
 
-<div class="scenes">
-  <img class="preview-image mat-elevation-z6" alt="Preview Image" src="https://external-preview.redd.it/aPSH8UCXJOAPRJY3ShZ0tAHOOb0qOB3iL08P5_5msFo.jpg?width=960&crop=smart&auto=webp&s=c3f15d3a554a0debd03e4ca9097bbb14b2ee2b64">
-  <img class="live-image mat-elevation-z6" alt="Live Image" src="https://external-preview.redd.it/aPSH8UCXJOAPRJY3ShZ0tAHOOb0qOB3iL08P5_5msFo.jpg?width=960&crop=smart&auto=webp&s=c3f15d3a554a0debd03e4ca9097bbb14b2ee2b64">
+    <div class="scene-controls">
+      <button mat-button color="primar" class="mat-elevation-z1" (click)="generate()">Generate</button>
+      <mat-icon class="control-separator">radio</mat-icon>
+      <button mat-button color="primar" class="control-separator mat-elevation-z1" (click)="cut_in()">Cut In</button>
+      <button mat-button color="primar" class="control-separator mat-elevation-z1" (click)="fade_in()">Fade In</button>
+    </div>
+  </div>
+
+  <div class="scenes">
+    <img class="preview-image mat-elevation-z6"
+         alt="Preview Image"
+         [src]="preview_img_src">
+    <app-scene [full_image]="false"></app-scene>
+  </div>
+
 </div>

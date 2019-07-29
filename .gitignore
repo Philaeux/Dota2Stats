@@ -1,3 +1,5 @@
 .idea
 
 backend/.venv
+backend/api/settings.cfg
+backend/api/assets/generated/*.png
