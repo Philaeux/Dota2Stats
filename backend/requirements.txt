@@ -1,5 +1,7 @@
 alembic
+Pillow
 psycopg2-binary
+requests
 SQLAlchemy
 tornado
 tornado-sqlalchemy

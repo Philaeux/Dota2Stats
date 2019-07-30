@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { environment } from "../../environments/environment";
 import { teams } from "../data"
-import { APIResult, Message } from "../API/APIInterfaces";
+import { APIResult, APIGroupStageResult } from "../API/APIInterfaces";
 import {WebsocketService} from "../websocket.service";
 
 @Component({
@@ -13,10 +13,14 @@ import {WebsocketService} from "../websocket.service";
 })
 export class DashboardComponent implements OnInit {
 
+  group_data_columns: string[] = ['id', "name", 'group_number', 'position', "wins", "loses", "color", "actions"];
+  group_data_source: object[] = [];
+
   image_type: string;
   teams: string[][];
   selected_team: string;
   selected_team_2: string;
+  group_stage_team: string;
   game_id: string;
 
   preview_img_src: string;
@@ -31,9 +35,11 @@ export class DashboardComponent implements OnInit {
     this.teams = teams;
     this.selected_team = '39';
     this.selected_team_2 = '39';
-    this.game_id = '';
+    this.group_stage_team = '39';
+    this.game_id = '4874722743';
 
     this.rebuild_preview();
+    this.refresh_group_stage();
   }
 
   build_image_name() {
@@ -82,6 +88,8 @@ export class DashboardComponent implements OnInit {
     this.http.post<APIResult>(environment.baseAPI + "/api/generate", payload).subscribe(json => {
       if (json.success) {
         this.rebuild_preview();
+      } else {
+        console.log(json);
       }
     });
   }
@@ -97,6 +105,43 @@ export class DashboardComponent implements OnInit {
     this.webSocketService.sendMessage({
       "image": this.build_image_name(),
       "transition": "cut"
+    });
+  }
+
+  insert_team() {
+    let payload = { "id": (<number>(<unknown> this.group_stage_team )) };
+    this.http.post<APIResult>(environment.baseAPI + "/api/group_stage/add", payload).subscribe(json => {
+      if (json.success) {
+        this.refresh_group_stage();
+      }
+    });
+  }
+
+  refresh_group_stage() {
+    this.http.get<APIResult>(environment.baseAPI + "/api/group_stage/list").subscribe(json => {
+      if (json.success) {
+        let result = (<APIGroupStageResult>json.payload);
+        this.group_data_source = result.groups;
+      }
+    });
+  }
+
+  delete_group_team(id) {
+    let payload = { "id": id };
+    this.http.post<APIResult>(environment.baseAPI + "/api/group_stage/delete", payload).subscribe(json => {
+      if (json.success) {
+        this.refresh_group_stage();
+      }
+    });
+  }
+
+  update_group_team(element) {
+    let payload = { "id": element.id, "group_number": element.group_number, "position": element.position,
+                    "wins": element.wins, "loses": element.loses, "color": element.color };
+    this.http.post<APIResult>(environment.baseAPI + "/api/group_stage/update", payload).subscribe(json => {
+      if (json.success) {
+        this.refresh_group_stage();
+      }
     });
   }
 }

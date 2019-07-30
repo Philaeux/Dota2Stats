@@ -34,10 +34,10 @@
     </div>
 
     <div class="scene-controls">
-      <button mat-button color="primar" class="mat-elevation-z1" (click)="generate()">Generate</button>
+      <button mat-button color="primary" class="mat-elevation-z1" (click)="generate()">Generate</button>
       <mat-icon class="control-separator">radio</mat-icon>
-      <button mat-button color="primar" class="control-separator mat-elevation-z1" (click)="cut_in()">Cut In</button>
-      <button mat-button color="primar" class="control-separator mat-elevation-z1" (click)="fade_in()">Fade In</button>
+      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="cut_in()">Cut In</button>
+      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="fade_in()">Fade In</button>
     </div>
   </div>
 
@@ -46,6 +46,86 @@
          alt="Preview Image"
          [src]="preview_img_src">
     <app-scene [full_image]="false"></app-scene>
+  </div>
+
+  <div class="group-stage-component mat-elevation-z1">
+    <div class="scene-controls">
+      <mat-select placeholder="Team" class="input-selection" [(ngModel)]="group_stage_team">
+        <mat-option *ngFor="let row of teams" [value]="row[0]">
+          {{row[1]}}
+        </mat-option>
+      </mat-select>
+      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="insert_team()">Insert</button>
+      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="refresh_group_stage()">Refresh</button>
+    </div>
+
+      <table mat-table [dataSource]="group_data_source" class="mat-elevation-z8 group-table">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="group_number">
+          <th mat-header-cell *matHeaderCellDef> Group </th>
+          <td mat-cell *matCellDef="let element">
+            <input matInput type="number" [(ngModel)]="element.group_number" class="number-input">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> Position </th>
+          <td mat-cell *matCellDef="let element">
+            <input matInput type="number" [(ngModel)]="element.position" class="number-input">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="color">
+          <th mat-header-cell *matHeaderCellDef> Color </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-select [(ngModel)]="element.color">
+              <mat-option value="light_grey">light_grey</mat-option>
+              <mat-option value="light_red">light_red</mat-option>
+              <mat-option value="light_blue">light_blue</mat-option>
+              <mat-option value="ti_green">ti_green</mat-option>
+            </mat-select>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="wins">
+          <th mat-header-cell *matHeaderCellDef> Wins </th>
+          <td mat-cell *matCellDef="let element">
+            <input matInput type="number" [(ngModel)]="element.wins" class="number-input">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="loses">
+          <th mat-header-cell *matHeaderCellDef> Loses </th>
+          <td mat-cell *matCellDef="let element">
+            <input matInput type="number" [(ngModel)]="element.loses" class="number-input">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element"> &nbsp;
+            <button mat-icon-button (click)="update_group_team(element)">
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button (click)="delete_group_team(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="group_data_columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: group_data_columns;"></tr>
+      </table>
   </div>
 
 </div>

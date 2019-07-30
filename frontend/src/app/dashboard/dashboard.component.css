@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .control-separator {
@@ -53,4 +54,31 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.group-stage-component {
+  padding: 18px;
+  margin-top: 18px;
+  min-width: 100px;
+}
+
+.input-selection {
+  width: 200px;
+}
+
+.group-table {
+  margin-top: 18px;
+  width: 1200px;
+}
+
+.number-input {
+  width: 40px;
+}
+
+.mat-column-color {
+  width: 100px;
+}
+
+.mat-column-actions {
+  width: 100px;
 }

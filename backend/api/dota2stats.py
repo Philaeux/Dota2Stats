@@ -2,7 +2,6 @@ import os
 import json
 import urllib
 
-from sqlalchemy import Integer, BigInteger, Column, String
 from tornado.web import Application, RequestHandler
 from tornado.websocket import WebSocketHandler
 from tornado.options import define, options, parse_config_file
@@ -11,20 +10,12 @@ from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 from image_generator import ImageGenerator
+from models import DotaHeroes, GroupStage, DotaProTeam
 
-DeclarativeBase = declarative_base()
+
 define('database_url', type=str, help='Database URL')
 settings_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.cfg")
 parse_config_file(settings_file)
-
-
-class DotaHeroes(DeclarativeBase):
-    __tablename__ = 'dota_heroes'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(255), unique=True)
-    short_name = Column(String(255), unique=True)
-    display_name = Column(String(255), unique=True)
 
 
 class NativeCoroutinesRequestHandler(SessionMixin, RequestHandler):
@@ -48,22 +39,24 @@ class ImageRequestHandler(RequestHandler):
 
 
 class CROSRequestHandler(RequestHandler):
+
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header('Access-Control-Allow-Headers', "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With"
                         + ", X-Requested-By, If-Modified-Since, X-File-Name, Cache-Control")
-        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE')
 
     def options(self):
         self.set_status(204)
         self.finish()
 
 
-class ImageGeneratorRequestHandler(CROSRequestHandler):
+class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
     def initialize(self, image_generator):
         self.image_generator = image_generator
+        self.image_generator.session = self.session
 
-    def post(self):
+    async def post(self):
         request_body = json.loads(self.request.body)
         if 'image_type' not in request_body:
             self.write({"success": False, "error": "No image type specified"})
@@ -76,7 +69,22 @@ class ImageGeneratorRequestHandler(CROSRequestHandler):
 
             self.image_generator.generate_static(request_body["team_id"])
             self.write(
-                {"success": True}
+                {"success": True, "error": ""}
+            )
+        elif request_body["image_type"] == "group_stage":
+            self.image_generator.generate_group_stage()
+            self.write(
+                {"success": True, "error": ""}
+            )
+        elif request_body["image_type"] == "post_game":
+            if ('game_id' not in request_body
+                    or not request_body["game_id"].isdigit()
+                    or int(request_body["game_id"]) <= 0):
+                self.write({"success": False, "error": "Invalid id specified"})
+                return
+            await self.image_generator.generate_post_game(int(request_body["game_id"]))
+            self.write(
+                {"success": True, "error": ""}
             )
         else:
             self.write({"success": False, "error": "Unknown image type"})
@@ -110,11 +118,90 @@ class SceneHandler(WebSocketHandler):
         SceneHandler.clients.remove(self)
 
 
+class GroupStageListHandler(CROSRequestHandler, SessionMixin):
+
+    def get(self):
+        groups = []
+        for group_team, team in self.session\
+                .query(GroupStage, DotaProTeam)\
+                .filter(GroupStage.team_id == DotaProTeam.id)\
+                .order_by(GroupStage.group_number, GroupStage.position)\
+                .all():
+            groups.append(
+                {"id": team.id, "name": team.name, "group_number": group_team.group_number,
+                 "position": group_team.position, "color": group_team.color, "wins": group_team.wins,
+                 "loses": group_team.loses})
+        self.write(
+            {"success": True, "error": "", "payload": {"groups": groups}}
+        )
+
+
+class GroupStageAddHandler(CROSRequestHandler, SessionMixin):
+
+    async def post(self):
+        args = json.loads(self.request.body)
+        if "id" not in args:
+            self.write({"success": False, "error": "No id specified in payload."})
+            return
+
+        count = await as_future(self.session.query(GroupStage).filter(GroupStage.team_id == args["id"]).count)
+        if count != 0:
+            self.write({"success": False, "error": "Team already in group stage."})
+        else:
+            new_team = GroupStage(args["id"])
+            self.session.add(new_team)
+            await as_future(self.session.commit)
+            self.write({"success": True, "error": ""})
+
+
+class GroupStageDeleteHandler(CROSRequestHandler, SessionMixin):
+
+    async def post(self):
+        args = json.loads(self.request.body)
+        if "id" not in args:
+            self.write({"success": False, "error": "No id specified in payload."})
+            return
+
+        team = await as_future(self.session.query(GroupStage).filter(GroupStage.team_id == args["id"]).one_or_none)
+        if team is None:
+            self.write({"success": False, "error": "Team not in group stage."})
+        else:
+            self.session.delete(team)
+            await as_future(self.session.commit)
+            self.write({"success": True, "error": ""})
+
+
+class GroupStageUpdateHandler(CROSRequestHandler, SessionMixin):
+
+    async def post(self):
+        args = json.loads(self.request.body)
+        if ("id" not in args or "group_number" not in args or "position" not in args or "wins" not in args
+                or "loses" not in args or "color" not in args):
+            self.write({"success": False, "error": "All parameters not specified in payload."})
+            return
+
+        team = await as_future(self.session.query(GroupStage).filter(GroupStage.team_id == args["id"]).one_or_none)
+        if team is None:
+            self.write({"success": False, "error": "Team not in group stage."})
+        else:
+            team.group_number = args["group_number"]
+            team.position = args["position"]
+            team.wins = args["wins"]
+            team.loses = args["loses"]
+            team.color = args["color"]
+            await as_future(self.session.commit)
+            self.write({"success": True, "error": ""})
+
+
 def make_app(database_url):
     image_generator = ImageGenerator(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets"))
     urls = [
         (r"/api/img/(.*)", ImageRequestHandler),
         (r"/api/generate", ImageGeneratorRequestHandler, dict(image_generator=image_generator)),
+        (r"/api/group_stage/list", GroupStageListHandler),
+        (r"/api/group_stage/add", GroupStageAddHandler),
+        (r"/api/group_stage/delete", GroupStageDeleteHandler),
+        (r"/api/group_stage/update", GroupStageUpdateHandler),
         (r"/api/scene", SceneHandler)
     ]
     return Application(urls,

@@ -11,7 +11,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSelectModule} from "@angular/material";
+import {
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatMenuModule,
+  MatSelectModule,
+  MatTableModule
+} from "@angular/material";
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -41,7 +48,8 @@ import { SceneComponent } from './scene/scene.component';
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
