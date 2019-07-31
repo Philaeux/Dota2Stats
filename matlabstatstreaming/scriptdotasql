@@ -1,6 +1,6 @@
 CREATE TABLE public.tn (
 	id serial NOT NULL PRIMARY KEY,
-	id_tn int NOT NULL,
+	id_tn int NOT NULL unique,
 	name_tn text NOT NULL,
 	closed int4 NOT NULL,
 	dateend date NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE public.tn (
 
 CREATE TABLE public.patch (
 	id serial NOT NULL,
-	patchnum int4 NULL,
+	patchnum int4 NULL unique,
 	patchind varchar NULL,
 	patchdate date NULL,
 	CONSTRAINT patch_pk PRIMARY KEY (id)
@@ -20,7 +20,7 @@ CREATE TABLE public.patch (
 
 CREATE TABLE public.team (
 	id serial not null primary key,
-	team_id int4 NOT NULL,
+	team_id int4 NOT NULL unique,
 	team_name varchar(255) NOT NULL
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE public.hero (
 
 CREATE TABLE public.patch (
 	id serial not null primary key,
-	patch_id int4 NOT NULL,
+	patch_id int4 NOT NULL unique,
 	patch_number int NULL,
 	patch_indice varchar(50) NULL,
 	patchinit int2 NULL
@@ -56,7 +56,7 @@ CREATE TABLE public.matchs (
 
 CREATE TABLE public.openmatch (
 	id serial NOT NULL primary key,
-	match_id bigint NOT NULL,
+	match_id bigint NOT NULL unique,
 	id_tn int NOT NULL,
 	radiant_team_id bigint NOT NULL,
 	dire_team_id bigint NOT NULL,
@@ -71,11 +71,11 @@ CREATE TABLE public.openmatch (
 	radiant_b4 int NULL,
 	radiant_b5 int NULL,
 	radiant_b6 int NULL,
-	rabiant_p1 int NULL,
-	rabiant_p2 int NULL,
-	rabiant_p3 int NULL,
-	rabiant_p4 int NULL,
-	rabiant_p5 int NULL,
+	radiant_p1 int NULL,
+	radiant_p2 int NULL,
+	radiant_p3 int NULL,
+	radiant_p4 int NULL,
+	radiant_p5 int NULL,
 	dire_b1 int NULL,
 	dire_b2 int NULL,
 	dire_b3 int NULL,
@@ -92,33 +92,33 @@ CREATE TABLE public.openmatch (
 	CONSTRAINT openmatch_fk FOREIGN KEY (id_tn) REFERENCES public.tn(id_tn),
 	CONSTRAINT openmatch_fk_1 FOREIGN KEY (radiant_team_id) REFERENCES public.team(team_id),
 	CONSTRAINT openmatch_fk_2 FOREIGN KEY (dire_team_id) REFERENCES public.team(team_id),
-	CONSTRAINT openmatch_fk_3 FOREIGN KEY (radiant_b1) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_4 FOREIGN KEY (radiant_b2) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_5 FOREIGN KEY (radiant_b3) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_6 FOREIGN KEY (radiant_b4) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_7 FOREIGN KEY (radiant_b5) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_8 FOREIGN KEY (radiant_b6) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_9 FOREIGN KEY (radiant_p1) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_10 FOREIGN KEY (radiant_p2) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_11 FOREIGN KEY (radiant_p3) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_12 FOREIGN KEY (radiant_p4) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_13 FOREIGN KEY (radiant_p5) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_14 FOREIGN KEY (dire_b1) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_15 FOREIGN KEY (dire_b2) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_16 FOREIGN KEY (dire_b3) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_17 FOREIGN KEY (dire_b4) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_18 FOREIGN KEY (dire_b5) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_19 FOREIGN KEY (dire_b6) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_20 FOREIGN KEY (dire_p1) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_21 FOREIGN KEY (dire_p2) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_22 FOREIGN KEY (dire_p3) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_23 FOREIGN KEY (dire_p4) REFERENCES public.hero(hero_id),
-	CONSTRAINT openmatch_fk_24 FOREIGN KEY (dire_p5) REFERENCES public.hero(hero_id)
+	CONSTRAINT openmatch_fk_3 FOREIGN KEY (radiant_b1) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_4 FOREIGN KEY (radiant_b2) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_5 FOREIGN KEY (radiant_b3) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_6 FOREIGN KEY (radiant_b4) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_7 FOREIGN KEY (radiant_b5) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_8 FOREIGN KEY (radiant_b6) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_9 FOREIGN KEY (radiant_p1) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_10 FOREIGN KEY (radiant_p2) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_11 FOREIGN KEY (radiant_p3) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_12 FOREIGN KEY (radiant_p4) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_13 FOREIGN KEY (radiant_p5) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_14 FOREIGN KEY (dire_b1) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_15 FOREIGN KEY (dire_b2) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_16 FOREIGN KEY (dire_b3) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_17 FOREIGN KEY (dire_b4) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_18 FOREIGN KEY (dire_b5) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_19 FOREIGN KEY (dire_b6) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_20 FOREIGN KEY (dire_p1) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_21 FOREIGN KEY (dire_p2) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_22 FOREIGN KEY (dire_p3) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_23 FOREIGN KEY (dire_p4) REFERENCES public.hero(id),
+	CONSTRAINT openmatch_fk_24 FOREIGN KEY (dire_p5) REFERENCES public.hero(id)
 );
 
 CREATE TABLE public.valvematch (
 	id serial not null primary key,
-	match_id bigint NULL PRIMARY KEY,
+	match_id bigint not NULL unique,
 	id_tn int NOT NULL,
 	radiant_name varchar(255) NULL,
 	dire_name varchar(255) NULL,
@@ -137,11 +137,11 @@ CREATE TABLE public.valvematch (
 	radiant_b4 int NULL,
 	radiant_b5 int NULL,
 	radiant_b6 int NULL,
-	rabiant_p1 int NULL,
-	rabiant_p2 int NULL,
-	rabiant_p3 int NULL,
-	rabiant_p4 int NULL,
-	rabiant_p5 int NULL,
+	radiant_p1 int NULL,
+	radiant_p2 int NULL,
+	radiant_p3 int NULL,
+	radiant_p4 int NULL,
+	radiant_p5 int NULL,
 	dire_b1 int NULL,
 	dire_b2 int NULL,
 	dire_b3 int NULL,
@@ -156,28 +156,28 @@ CREATE TABLE public.valvematch (
 	CONSTRAINT valvematch_fk FOREIGN KEY (id_tn) REFERENCES public.tn(id_tn),
 	CONSTRAINT valvematch_fk_1 FOREIGN KEY (radiant_team_id) REFERENCES public.team(team_id),
 	CONSTRAINT valvematch_fk_2 FOREIGN KEY (dire_team_id) REFERENCES public.team(team_id),
-	CONSTRAINT valvematch_fk_3 FOREIGN KEY (radiant_b1) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_4 FOREIGN KEY (radiant_b2) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_5 FOREIGN KEY (radiant_b3) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_6 FOREIGN KEY (radiant_b4) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_7 FOREIGN KEY (radiant_b5) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_8 FOREIGN KEY (radiant_b6) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_9 FOREIGN KEY (radiant_p1) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_10 FOREIGN KEY (radiant_p2) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_11 FOREIGN KEY (radiant_p3) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_12 FOREIGN KEY (radiant_p4) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_13 FOREIGN KEY (radiant_p5) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_14 FOREIGN KEY (dire_b1) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_15 FOREIGN KEY (dire_b2) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_16 FOREIGN KEY (dire_b3) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_17 FOREIGN KEY (dire_b4) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_18 FOREIGN KEY (dire_b5) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_19 FOREIGN KEY (dire_b6) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_20 FOREIGN KEY (dire_p1) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_21 FOREIGN KEY (dire_p2) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_22 FOREIGN KEY (dire_p3) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_23 FOREIGN KEY (dire_p4) REFERENCES public.hero(hero_id),
-	CONSTRAINT valvematch_fk_24 FOREIGN KEY (dire_p5) REFERENCES public.hero(hero_id)
+	CONSTRAINT valvematch_fk_3 FOREIGN KEY (radiant_b1) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_4 FOREIGN KEY (radiant_b2) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_5 FOREIGN KEY (radiant_b3) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_6 FOREIGN KEY (radiant_b4) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_7 FOREIGN KEY (radiant_b5) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_8 FOREIGN KEY (radiant_b6) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_9 FOREIGN KEY (radiant_p1) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_10 FOREIGN KEY (radiant_p2) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_11 FOREIGN KEY (radiant_p3) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_12 FOREIGN KEY (radiant_p4) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_13 FOREIGN KEY (radiant_p5) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_14 FOREIGN KEY (dire_b1) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_15 FOREIGN KEY (dire_b2) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_16 FOREIGN KEY (dire_b3) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_17 FOREIGN KEY (dire_b4) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_18 FOREIGN KEY (dire_b5) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_19 FOREIGN KEY (dire_b6) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_20 FOREIGN KEY (dire_p1) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_21 FOREIGN KEY (dire_p2) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_22 FOREIGN KEY (dire_p3) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_23 FOREIGN KEY (dire_p4) REFERENCES public.hero(id),
+	CONSTRAINT valvematch_fk_24 FOREIGN KEY (dire_p5) REFERENCES public.hero(id)
 );
 
 CREATE TABLE public.valveplayermatch (
@@ -185,7 +185,7 @@ CREATE TABLE public.valveplayermatch (
 	account_id bigint NOT NULL,
 	match_id bigint NOT NULL,
 	player_slot int NULL,
-	hero_id int NOT NULL,
+	id int NOT NULL,
 	item_0 int NULL,
 	item_1 int NULL,
 	item_2 int NULL,
@@ -213,7 +213,7 @@ CREATE TABLE public.valveplayermatch (
 	scaled_tower_damage int NULL,
 	scaled_hero_healing int NULL,
 	CONSTRAINT valveplayermatch_fk FOREIGN KEY (match_id) REFERENCES matchs(match_id),
-	CONSTRAINT valveplayermatch_fk_1 FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT valveplayermatch_fk_1 FOREIGN KEY (id) REFERENCES hero(id),
 	CONSTRAINT valveplayermatch_fk_2 FOREIGN KEY (account_id) REFERENCES player(player_id),
 	CONSTRAINT valveplayermatch_fk_3 FOREIGN KEY (item_0) REFERENCES public.item(id),
 	CONSTRAINT valveplayermatch_fk_4 FOREIGN KEY (item_1) REFERENCES public.item(id),
@@ -251,7 +251,7 @@ CREATE TABLE public.openplayermatch (
 	match_id bigint NOT NULL,
 	account_id bigint NOT NULL,
 	player_slot int NOT NULL,
-	hero_id int NOT NULL,
+	id int NOT NULL,
 	item_0 int NULL,
 	item_1 int NULL,
 	item_2 int NULL,
@@ -350,7 +350,7 @@ CREATE TABLE public.openplayermatch (
 	heavens_halberd numeric(38) NULL,
 	mekansm numeric(38) NULL,
 	CONSTRAINT openplayermatch_fk FOREIGN KEY (match_id) REFERENCES matchs(match_id),
-	CONSTRAINT openplayermatch_fk_1 FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT openplayermatch_fk_1 FOREIGN KEY (id) REFERENCES hero(id),
 	CONSTRAINT openplayermatch_fk_2 FOREIGN KEY (account_id) REFERENCES player(player_id),
 	CONSTRAINT openplayermatch_fk_3 FOREIGN KEY (item_0) REFERENCES public.item(id),
 	CONSTRAINT openplayermatch_fk_4 FOREIGN KEY (item_1) REFERENCES public.item(id),
@@ -365,7 +365,7 @@ CREATE TABLE public.openplayermatch (
 
 CREATE TABLE public.stat_global_hero (
 	id serial NOT NULL,
-	hero_id int4 NOT NULL,
+	id int4 NOT NULL,
 	nb_pick int4 NULL,
 	nb_ban int4 NULL,
 	nb_match int4 NULL,
@@ -418,7 +418,7 @@ CREATE TABLE public.stat_global_hero (
 	min_hero_healing numeric NULL,
 	tot_hero_healing numeric NULL,
 	CONSTRAINT stat_global_hero_pkey PRIMARY KEY (id),
-	CONSTRAINT stat_global_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
+	CONSTRAINT stat_global_hero_fk FOREIGN KEY (id) REFERENCES hero(id)
 );
 
 CREATE TABLE public.stat_global_player (
@@ -825,7 +825,7 @@ CREATE TABLE public.stat_global_tn (
 
 CREATE TABLE public.stat_tn_hero (
 	id serial NOT NULL PRIMARY KEY,
-	hero_id int NULL,
+	id int NULL,
 	id_tn int NULL,
 	nb_pick numeric(38,6) NULL,
 	nb_ban numeric(38,6) NULL,
@@ -878,7 +878,7 @@ CREATE TABLE public.stat_tn_hero (
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
 	tot_hero_healing numeric(38,6) NULL,
-	CONSTRAINT stat_tn_hero_fk FOREIGN KEY (hero_id) REFERENCES public.hero(hero_id);
+	CONSTRAINT stat_tn_hero_fk FOREIGN KEY (id) REFERENCES public.hero(id);
 	CONSTRAINT stat_tn_hero_fk_1 FOREIGN KEY (id_tn) REFERENCES public.tn(id_tn);
 );
 
@@ -1240,7 +1240,7 @@ CREATE TABLE public.stat_tn_player (
 
 CREATE TABLE public.stat_tn_player_hero (
 	id serial NOT NULL,
-	hero_id int NULL,
+	id int NULL,
 	id_tn int NULL,
 	account_id bigint NULL,
 	nb_pick numeric(38,6) NULL,
@@ -1294,7 +1294,7 @@ CREATE TABLE public.stat_tn_player_hero (
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
 	tot_hero_healing numeric(38,6) NULL,
-	CONSTRAINT stat_tn_player_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT stat_tn_player_hero_fk FOREIGN KEY (id) REFERENCES hero(id),
 	CONSTRAINT stat_tn_player_hero_fk_1 FOREIGN KEY (account_id) REFERENCES player(player_id),
 	CONSTRAINT stat_tn_player_hero_fk_2 FOREIGN KEY (id_tn) REFERENCES tn(id_tn)
 );
@@ -1340,7 +1340,7 @@ CREATE TABLE public.stat_tn_team (
 
 CREATE TABLE public.stat_tn_team_hero (
 	id serial NOT NULL,
-	hero_id int NULL,
+	id int NULL,
 	id_tn int NULL,
 	team_id int NULL,
 	nb_pick numeric(38,6) NULL,
@@ -1398,7 +1398,7 @@ CREATE TABLE public.stat_tn_team_hero (
 	tot_hero_healing numeric(38,6) NULL,
 	CONSTRAINT stat_tn_team_hero_fk FOREIGN KEY (id_tn) REFERENCES tn(tn_id),
 	CONSTRAINT stat_tn_team_hero_fk2 FOREIGN KEY (team_id) REFERENCES team(team_id),
-	CONSTRAINT stat_tn_team_hero_fk3 FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
+	CONSTRAINT stat_tn_team_hero_fk3 FOREIGN KEY (id) REFERENCES hero(id)
 );
 
 CREATE TABLE public.stat_tn_tn (
@@ -1419,7 +1419,7 @@ CREATE TABLE public.stat_tn_tn (
 CREATE TABLE public.stat_patch_hero (
 	id serial NOT NULL,
 	patch_id int NOT NULL,
-	hero_id int4 NOT NULL,
+	id int4 NOT NULL,
 	nb_pick int4 NULL,
 	nb_ban int4 NULL,
 	nb_match int4 NULL,
@@ -1472,7 +1472,7 @@ CREATE TABLE public.stat_patch_hero (
 	min_hero_healing numeric NULL,
 	tot_hero_healing numeric NULL,
 	CONSTRAINT stat_patch_hero_pkey PRIMARY KEY (id),
-	CONSTRAINT stat_patch_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT stat_patch_hero_fk FOREIGN KEY (id) REFERENCES hero(id),
 	CONSTRAINT stat_patch_hero_fk2 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
 
@@ -1870,7 +1870,7 @@ CREATE TABLE public.stat_patch_team (
 CREATE TABLE public.stat_patch_team_hero (
 	id serial NOT NULL,
 	patch_id int8 NOT NULL,
-	hero_id int NULL,
+	id int NULL,
 	id_tn int NULL,
 	team_id int NULL,
 	nb_pick numeric(38,6) NULL,
@@ -1928,13 +1928,13 @@ CREATE TABLE public.stat_patch_team_hero (
 	tot_hero_healing numeric(38,6) NULL,
 	CONSTRAINT stat_patch_team_fk FOREIGN KEY (patch_id) REFERENCES patch(patch_tn),
 	CONSTRAINT stat_patch_team_fk_1 FOREIGN KEY (team_id) REFERENCES team(team_id),
-	CONSTRAINT stat_patch_team_fk_2 FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
+	CONSTRAINT stat_patch_team_fk_2 FOREIGN KEY (id) REFERENCES hero(id)
 );
 
 CREATE TABLE public.stat_patch_player_hero (
 	id serial NOT NULL,
 	patch_id int8 NOT NULL,
-	hero_id int NULL,
+	id int NULL,
 	id_tn int NULL,
 	account_id bigint NULL,
 	nb_pick numeric(38,6) NULL,
@@ -1988,7 +1988,7 @@ CREATE TABLE public.stat_patch_player_hero (
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
 	tot_hero_healing numeric(38,6) NULL,
-	CONSTRAINT stat_patch_player_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT stat_patch_player_hero_fk FOREIGN KEY (id) REFERENCES hero(id),
 	CONSTRAINT stat_patch_player_hero_fk_1 FOREIGN KEY (account_id) REFERENCES player(player_id),
 	CONSTRAINT stat_patch_player_hero_fk_2 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
