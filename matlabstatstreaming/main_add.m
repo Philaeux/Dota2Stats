@@ -19,32 +19,37 @@ try
     end
     
     %% Récupération de la liste des tournois en base
-    rq_sql_tn=['select * from shiba.public.tn where id_tn=',num2str(tn_id)];
+    rq_sql_tn=['select id from public.tn where id_tn=',num2str(tn_id)];
     sql_tn=pgsqldata(conn,rq_sql_tn);
-    if sql_tn==0
+    if strcmp(sql_tn.id,'No Data')==1
         disp('id tournois inconnue')
         tn_name = input('nom du tournoi : ','s');
         tn_closed = input('closed tn 1 = yes 0 = no : ','s');
+        tn_closed = str2double(tn_closed);
         tn_end = input('date end tn aaaa-mm-dd : ','s');
+        tn_end = datetime(tn_end);
         tn_type = input('tn type major/minor : ','s');
         tn_quali = input('tn with qualification phase 1 = yes 0 = no : ','s');
+        tn_quali = str2double(tn_quali);
         if tn_quali==1
             tn_qualifendate=input('date qualif end tn aaaa-mm-dd : ','s');
+            tn_qualifendate= datetime(tn_qualifendate);
             tn_quali_end = input('tn qualification closed 1 = yes 0 = no  : ','s');
+            tn_quali_end = str2double(tn_quali_end);
         else
             tn_qualifendate = NaT;
             tn_quali_end = NaN;
         end
         tn=table();
         tn.id_tn=tn_id;
-        tn.name_tn=tn_name;
+        tn.name_tn{1,1}=tn_name;
         tn.closed=tn_closed;
         tn.dateend=tn_end;
-        tn.withqualif=tn_quali;
+        tn.withqualif{1,1}=tn_quali;
         tn.qualifend=tn_qualifendate;
-        tn.type=tn_type;
+        tn.type{1,1}=tn_type;
         tn.qualifclosed=tn_quali_end;
-        insert(conn,'shiba.public.tn',{'id_tn','name_tn','closed','dateend','withqualif','qualifend','qualifend','type','qualifclosed'},tn);
+        CBM_PGSQL_inject1l_light(conn,'tn',tn.Properties.VariableNames,tn,'id',NaN,'public','add')
     else
         disp('Tournois déjà existant...')
     end
@@ -56,17 +61,18 @@ try
         disp('api valve indisponible nouvel essai dnas 10 min...')
         pause(600)
     end
-    matchs=table([TktMatch.result.matches.series_id].', [TktMatch.result.matches.match_id].', [TktMatch.result.matches.start_time].', [TktMatch.result.matches.radiant_team_id].',...
-        [TktMatch.result.matches.dire_team_id].', 'VariableNames', {'series_id', 'match_id', 'start_time', 'radiant_team_id', 'dire_team_id'});
+    matchs=init_match(TktMatch);
+
     
     
     %% Recup match déjà en base
-    rq_sql_match=['select * from shiba.public.matchs where id_tn=',num2str(tn_id)];
+    rq_sql_match=['select * from public.matchs where id_tn=',num2str(tn_id)];
     sql_match=pgsqldata(conn,rq_sql_match);
     
     %% Insertion des match du ticket en base
     if strcmp(sql_match,'No Data')==1
-        insert(conn,'shiba.public.matchs',{'series_id','match_id','start_time','radiant_team_id','dire_team_id','id_tn'},matchs);
+        insert(conn,'public.matchs',{'series_id','match_id','start_time','radiant_team_id','dire_team_id','id_tn'},matchs);
+        CBM_PGSQL_Transact_light(conn,'matchs',matchs.Properties.VariableNames,matchs,'id','public')
         execmatch=table();
         execmatch.match_id=matchs.match_id;
         execmatch.execvalveplayer(:,1)=0;
