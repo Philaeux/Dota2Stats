@@ -12,8 +12,8 @@ conn = database('dota2stats','dota2stats','r01wm84xCyazf7BJl8Ou');
 
 try
     %% initialisation patch
-    init_patch=pgsqldata(conn,'select patch_init,id from public.patch order by patchdate desc limit 1');
-    if init_patch==0
+    init_patch=pgsqldata(conn,'select update,id from public.patch order by patchdate desc limit 1');
+    if init_patch.update==0
         initpatch(conn);
         pgsqlexec(conn,['update patch set init_patch=1 where patch.id=',num2str(init_patch.id)]);
     end
@@ -21,7 +21,7 @@ try
     %% Récupération de la liste des tournois en base
     rq_sql_tn=['select * from shiba.public.tn where id_tn=',num2str(tn_id)];
     sql_tn=pgsqldata(conn,rq_sql_tn);
-    if strcmp(sql_tn,'No Data')==1
+    if sql_tn==0
         disp('id tournois inconnue')
         tn_name = input('nom du tournoi : ','s');
         tn_closed = input('closed tn 1 = yes 0 = no : ','s');
