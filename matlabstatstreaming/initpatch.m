@@ -21,7 +21,7 @@ for i=1:nbitem
     else
         itemdbadd.image='null';
     end
-    if isfield(itemadd,'strat')==1
+    if isfield(itemadd,'stat')==1
         itemdbadd.cost=itemadd.stat.cost;
         itemdbadd.secret_shop=itemadd.stat.isSecretShop;
         itemdbadd.side_shop=itemadd.stat.isSideShop;
@@ -29,8 +29,8 @@ for i=1:nbitem
         itemdbadd.support=itemadd.stat.isSupport;
     else
         itemdbadd.cost=0;
-        itemdbadd.secretshop=0;
-        itemdbadd.sideshop=0;
+        itemdbadd.secret_shop=0;
+        itemdbadd.side_shop=0;
         itemdbadd.recipe=0;
         itemdbadd.support=1;
     end
@@ -56,7 +56,7 @@ herosql.attack_type=hero.attack_type;
 
 %% insertion sql
 pgsqlexec(conn,'delete from public.hero')
-insert(conn,'public.item',{'id','name','displayname','primary_attr','attack_type'},itemsql);
+insert(conn,'public.hero',{'id','name','displayname','primary_attr','attack_type'},herosql);
 
 
 end

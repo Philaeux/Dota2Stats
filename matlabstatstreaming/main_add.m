@@ -8,7 +8,7 @@ setdbprefs('NullStringRead', 'null');
 setdbprefs('DataReturnFormat','table');
 
 %% Make connection to database
-conn = database('ShiBaSQL','shiba','FTShiBa26');
+conn = database('dota2stats','dota2stats','r01wm84xCyazf7BJl8Ou');
 
 try
     %% initialisation patch
