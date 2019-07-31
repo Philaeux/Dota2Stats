@@ -1,16 +1,17 @@
 CREATE TABLE public.tn (
-	id_tn int4 NOT NULL PRIMARY KEY,
-	name_tn varchar(255) NULL,
-	closed int4 NULL,
-	dateend date NULL,
-	withqualif int4 NULL,
+	id serial NOT NULL PRIMARY KEY,
+	id_tn int NOT NULL,
+	name_tn text NOT NULL,
+	closed int4 NOT NULL,
+	dateend date NOT NULL,
+	withqualif int4 NOT NULL,
 	qualifend date NULL,
 	type varchar NULL,
 	qualifclosed int4 NULL
 );
 
 CREATE TABLE public.patch (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patchnum int4 NULL,
 	patchind varchar NULL,
 	patchdate date NULL,
@@ -18,8 +19,9 @@ CREATE TABLE public.patch (
 );
 
 CREATE TABLE public.team (
-	team_id int4 NOT NULL PRIMARY KEY,
-	team_name varchar(255) NULL
+	id serial not null primary key,
+	team_id int4 NOT NULL,
+	team_name varchar(255) NOT NULL
 );
 
 CREATE TABLE public.hero (
@@ -31,27 +33,30 @@ CREATE TABLE public.hero (
 );
 
 CREATE TABLE public.patch (
-	patch_id int4 NOT NULL PRIMARY KEY,
+	id serial not null primary key,
+	patch_id int4 NOT NULL,
 	patch_number int NULL,
 	patch_indice varchar(50) NULL,
 	patchinit int2 NULL
 );
 
 CREATE TABLE public.matchs (
-	match_id bigint NOT NULL PRIMARY KEY,
+	id serial not null primary key,
+	match_id bigint NOT NULL,
 	patch_id int NOT NULL,
 	id_tn int NOT NULL,
 	series_id bigint NOT NULL,
 	radiant_team_id bigint NOT NULL,
 	dire_team_id bigint NOT NULL,
-	start_time bigint NOT NULL,
+	start_time timestamp NOT NULL,
 	CONSTRAINT matchs_fk FOREIGN KEY (radiant_team_id) REFERENCES team(team_id),
 	CONSTRAINT matchs_fk_1 FOREIGN KEY (dire_team_id) REFERENCES team(team_id),
 	CONSTRAINT matchs_fk_2 FOREIGN KEY (id_tn) REFERENCES tn(id_tn)
 );
 
 CREATE TABLE public.openmatch (
-	match_id bigint NOT NULL PRIMARY KEY,
+	id serial NOT NULL primary key,
+	match_id bigint NOT NULL,
 	id_tn int NOT NULL,
 	radiant_team_id bigint NOT NULL,
 	dire_team_id bigint NOT NULL,
@@ -112,6 +117,7 @@ CREATE TABLE public.openmatch (
 );
 
 CREATE TABLE public.valvematch (
+	id serial not null primary key,
 	match_id bigint NULL PRIMARY KEY,
 	id_tn int NOT NULL,
 	radiant_name varchar(255) NULL,
@@ -175,7 +181,7 @@ CREATE TABLE public.valvematch (
 );
 
 CREATE TABLE public.valveplayermatch (
-	id bigint NOT NULL PRIMARY KEY,
+	id serial NOT NULL PRIMARY KEY,
 	account_id bigint NOT NULL,
 	match_id bigint NOT NULL,
 	player_slot int NULL,
@@ -221,7 +227,8 @@ CREATE TABLE public.valveplayermatch (
 );
 
 CREATE TABLE public.player (
-	player_id int4 NOT NULL PRIMARY KEY,
+	id serial not null primary key,
+	player_id int4 NOT NULL,
 	player_name varchar(255) NULL,
 	team_id int4 NULL
 );
@@ -240,7 +247,7 @@ CREATE TABLE public.item (
 );
 
 CREATE TABLE public.openplayermatch (
-	id bigint NOT NULL PRIMARY KEY,
+	id serial NOT NULL PRIMARY KEY,
 	match_id bigint NOT NULL,
 	account_id bigint NOT NULL,
 	player_slot int NOT NULL,
@@ -357,7 +364,7 @@ CREATE TABLE public.openplayermatch (
 );
 
 CREATE TABLE public.stat_global_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	hero_id int4 NOT NULL,
 	nb_pick int4 NULL,
 	nb_ban int4 NULL,
@@ -415,7 +422,7 @@ CREATE TABLE public.stat_global_hero (
 );
 
 CREATE TABLE public.stat_global_player (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	account_id int8 NOT NULL,
 	mean_obs_placed numeric NULL,
 	max_obs_placed numeric NULL,
@@ -770,7 +777,7 @@ CREATE TABLE public.stat_global_player (
 );
 
 CREATE TABLE public.stat_global_team (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	team_id int4 NULL,
 	mean_is_radiant numeric NULL,
 	max_is_radiant numeric NULL,
@@ -802,7 +809,7 @@ CREATE TABLE public.stat_global_team (
 );
 
 CREATE TABLE public.stat_global_tn (
-	id int4 NOT NULL PRIMARY KEY,
+	id serial NOT NULL PRIMARY KEY,
 	tn_id int NOT NULL,
 	nb_match int NULL,
 	mean_radiant_win numeric(38,6) NULL,
@@ -817,7 +824,7 @@ CREATE TABLE public.stat_global_tn (
 );
 
 CREATE TABLE public.stat_tn_hero (
-	id int4 NOT NULL PRIMARY KEY,
+	id serial NOT NULL PRIMARY KEY,
 	hero_id int NULL,
 	id_tn int NULL,
 	nb_pick numeric(38,6) NULL,
@@ -876,7 +883,7 @@ CREATE TABLE public.stat_tn_hero (
 );
 
 CREATE TABLE public.stat_tn_player (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	account_id bigint NULL,
 	id_tn int NULL,è
 	mean_obs_placed numeric(38,6) NULL,
@@ -1232,7 +1239,7 @@ CREATE TABLE public.stat_tn_player (
 );
 
 CREATE TABLE public.stat_tn_player_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	hero_id int NULL,
 	id_tn int NULL,
 	account_id bigint NULL,
@@ -1293,7 +1300,7 @@ CREATE TABLE public.stat_tn_player_hero (
 );
 
 CREATE TABLE public.stat_tn_team (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	team_id int NULL,
 	tn_id int NULL,
 	mean_is_radiant numeric(38,6) NULL,
@@ -1332,7 +1339,7 @@ CREATE TABLE public.stat_tn_team (
 );
 
 CREATE TABLE public.stat_tn_team_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	hero_id int NULL,
 	id_tn int NULL,
 	team_id int NULL,
@@ -1388,11 +1395,14 @@ CREATE TABLE public.stat_tn_team_hero (
 	mean_hero_healing numeric(38,6) NULL,
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
-	tot_hero_healing numeric(38,6) NULL
+	tot_hero_healing numeric(38,6) NULL,
+	CONSTRAINT stat_tn_team_hero_fk FOREIGN KEY (id_tn) REFERENCES tn(tn_id),
+	CONSTRAINT stat_tn_team_hero_fk2 FOREIGN KEY (team_id) REFERENCES team(team_id),
+	CONSTRAINT stat_tn_team_hero_fk3 FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
 );
 
 CREATE TABLE public.stat_tn_tn (
-	id int4 NOT NULL,
+	id serial NOT NULL primary key,
 	id_tn int NULL,
 	nb_match numeric(38,6) NULL,
 	mean_radiant_win numeric(38,6) NULL,
@@ -1402,11 +1412,12 @@ CREATE TABLE public.stat_tn_tn (
 	mean_duration numeric(38,6) NULL,
 	max_duration numeric(38,6) NULL,
 	min_duration numeric(38,6) NULL,
-	tot_duration numeric(38,6) NULL
+	tot_duration numeric(38,6) NULL,
+	CONSTRAINT stat_tn_tn_fk FOREIGN KEY (id_tn) REFERENCES tn(tn_id)
 );
 
 CREATE TABLE public.stat_patch_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patch_id int NOT NULL,
 	hero_id int4 NOT NULL,
 	nb_pick int4 NULL,
@@ -1461,11 +1472,12 @@ CREATE TABLE public.stat_patch_hero (
 	min_hero_healing numeric NULL,
 	tot_hero_healing numeric NULL,
 	CONSTRAINT stat_patch_hero_pkey PRIMARY KEY (id),
-	CONSTRAINT stat_patch_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
+	CONSTRAINT stat_patch_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT stat_patch_hero_fk2 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
 
 CREATE TABLE public.stat_patch_player (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patch_id int8 NOT NULL,
 	account_id int8 NOT NULL,
 	mean_obs_placed numeric NULL,
@@ -1817,11 +1829,12 @@ CREATE TABLE public.stat_patch_player (
 	min_mekansm numeric NULL,
 	tot_mekansm numeric NULL,
 	CONSTRAINT stat_patch_player_pkey PRIMARY KEY (id),
-	CONSTRAINT stat_patch_player_fk FOREIGN KEY (account_id) REFERENCES player(player_id)
+	CONSTRAINT stat_patch_player_fk FOREIGN KEY (account_id) REFERENCES player(player_id),
+	CONSTRAINT stat_patch_player_fk2 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
 
 CREATE TABLE public.stat_patch_team (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patch_id int8 NOT NULL,
 	team_id int4 NULL,
 	mean_is_radiant numeric NULL,
@@ -1851,10 +1864,11 @@ CREATE TABLE public.stat_patch_team (
 	nb_match numeric(38) NULL,
 	CONSTRAINT stat_patch_team_pkey PRIMARY KEY (id),
 	CONSTRAINT stat_patch_team_fk FOREIGN KEY (team_id) REFERENCES team(team_id)
+	CONSTRAINT stat_patch_team_fk1 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
 
 CREATE TABLE public.stat_patch_team_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patch_id int8 NOT NULL,
 	hero_id int NULL,
 	id_tn int NULL,
@@ -1911,11 +1925,14 @@ CREATE TABLE public.stat_patch_team_hero (
 	mean_hero_healing numeric(38,6) NULL,
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
-	tot_hero_healing numeric(38,6) NULL
+	tot_hero_healing numeric(38,6) NULL,
+	CONSTRAINT stat_patch_team_fk FOREIGN KEY (patch_id) REFERENCES patch(patch_tn),
+	CONSTRAINT stat_patch_team_fk_1 FOREIGN KEY (team_id) REFERENCES team(team_id),
+	CONSTRAINT stat_patch_team_fk_2 FOREIGN KEY (hero_id) REFERENCES hero(hero_id)
 );
 
 CREATE TABLE public.stat_patch_player_hero (
-	id int4 NOT NULL,
+	id serial NOT NULL,
 	patch_id int8 NOT NULL,
 	hero_id int NULL,
 	id_tn int NULL,
@@ -1973,5 +1990,5 @@ CREATE TABLE public.stat_patch_player_hero (
 	tot_hero_healing numeric(38,6) NULL,
 	CONSTRAINT stat_patch_player_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
 	CONSTRAINT stat_patch_player_hero_fk_1 FOREIGN KEY (account_id) REFERENCES player(player_id),
-	CONSTRAINT stat_patch_player_hero_fk_2 FOREIGN KEY (id_tn) REFERENCES tn(id_tn)
+	CONSTRAINT stat_patch_player_hero_fk_2 FOREIGN KEY (patch_id) REFERENCES patch(patch_id)
 );
