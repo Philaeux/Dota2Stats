@@ -8,7 +8,8 @@ setdbprefs('NullStringRead', 'null');
 setdbprefs('DataReturnFormat','table');
 
 %% Make connection to database
-conn = database('dota2stats','dota2stats','r01wm84xCyazf7BJl8Ou');
+load('sql.mat','config');
+conn = database(config.odbc,config.user,config.pass);
 
 try
     %% initialisation patch
