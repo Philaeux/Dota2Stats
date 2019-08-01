@@ -56,48 +56,54 @@ try
     end
     
     %% API VALVE : information ticket
-    try
-        TktMatch=TktInfo_ApiGetValve(tn_id);
-    catch
-        disp('api valve indisponible nouvel essai dnas 10 min...')
-        pause(600)
+    testvalve=0;
+    while testvalve==0
+        try
+            TktMatch=TktInfo_ApiGetValve(tn_id);
+            testvalve=1;
+        catch
+            disp('api valve indisponible nouvel essai dnas 1 min...')
+            pause(60)
+        end
     end
-    matchs=init_match(TktMatch);
-
-    
+    %%update des informations equipes et joueurs
+    updateteam(conn,TktMatch)
     
     %% Recup match déjà en base
     rq_sql_match=['select * from public.matchs where id_tn=',num2str(tn_id)];
     sql_match=pgsqldata(conn,rq_sql_match);
+    matchsql=init_match(TktMatch,tn_id,conn);
     
     %% Insertion des match du ticket en base
     if strcmp(sql_match,'No Data')==1
-        insert(conn,'public.matchs',{'series_id','match_id','start_time','radiant_team_id','dire_team_id','id_tn'},matchs);
-        CBM_PGSQL_Transact_light(conn,'matchs',matchs.Properties.VariableNames,matchs,'id','public')
+        CBM_PGSQL_Transact_light(conn,'matchs',matchsql.Properties.VariableNames,matchsql,'id','public')
         execmatch=table();
-        execmatch.match_id=matchs.match_id;
+        execmatch.match_id=matchsql.match_id;
+        execmatch.id(:,1)=NaN;
         execmatch.execvalveplayer(:,1)=0;
         execmatch.execvalvepicks(:,1)=0;
         execmatch.execopenpicks(:,1)=0;
         execmatch.execopenplayer(:,1)=0;
-        insert(conn,'shiba.public.execmatch',{'match_id','execvalveplayer','execvalvepicks','execopenpicks','execopenplayer'},execmatch);
-        newmatch=matchs;
+        CBM_PGSQL_Transact_light(conn,'execmatch',execmatch.Properties.VariableNames,execmatch,'id','public')
+        newmatch=matchsql;
     else
-        newmatch=setxor(matchs,sql_match);
+        newmatch=setxor(matchsql,sql_match);
         if isempty(newmatch)
             disp('pas de nouveau match a ajouter')
         else
-            insert(conn,'shiba.public.matchs',{'series_id','match_id','start_time','radiant_team_id','dire_team_id','id_tn'},newmatch);
+            CBM_PGSQL_Transact_light(conn,'matchs',newmatch.Properties.VariableNames,newmatch,'id','public')
             execmatch=table();
             execmatch.match_id=newmatch.match_id;
+            execmatch.id(:,1)=NaN;
             execmatch.execvalveplayer(:,1)=0;
             execmatch.execvalvepicks(:,1)=0;
             execmatch.execopenpicks(:,1)=0;
             execmatch.execopenplayer(:,1)=0;
-            insert(conn,'shiba.public.execmatch',{'match_id','execvalveplayer','execvalvepicks','execopenpicks','execopenplayer'},execmatch);
+            CBM_PGSQL_Transact_light(conn,'execmatch',execmatch.Properties.VariableNames,execmatch,'id','public')
         end
     end
     
+    %% liste des match a execvalve=0
     if ~isempty(newmatch)
         for i=1:height(newmatch)
             %% Recupération des info match source valve
