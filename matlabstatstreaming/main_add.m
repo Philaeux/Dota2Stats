@@ -113,8 +113,9 @@ try
             execvalve(datavalve,conn,newmatchvalve);
         end
     end
+    disp('Traitement Valve OK')
     %% liste des match a execopen<5
-    rqopen='select match_id,id,execopenplayer,execopenpicks from public.execmatch where execvalveplayer<5 or execvalvepicks<5';
+    rqopen='select match_id,id,execopenplayer,execopenpicks from public.execmatch where execopenplayer<5 or execopenpicks<5';
     newmatchopen=pgsqldata(conn,rqopen);
     if ~isempty(newmatchopen)
         for i=1:height(newmatchopen)
@@ -123,7 +124,7 @@ try
             execopen(dataod,conn,newmatchopen);
         end
     end
-    
+    disp('Traitement Open OK')
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% algo de fusion
     %% Récupération des informations en base
