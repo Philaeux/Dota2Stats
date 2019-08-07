@@ -57,7 +57,6 @@ fun Application.module(testing: Boolean = false) {
             call.respondText("HELLO WORLD 2", contentType = ContentType.Text.Plain)
         }
 
-        // Static feature. Try to access `/static/ktor_logo.svg`
         static("/static") {
             resources("static")
         }

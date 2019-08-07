@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {repeat, retry} from "rxjs/operators";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {environment} from "../../environments/environment";
 import {WebsocketService} from "../websocket.service";
@@ -36,9 +37,9 @@ export class SceneComponent implements OnInit {
 
   ngOnInit() {
     this.fade_status = 'hidden';
-    this.webSocketService.ws_subject.subscribe(
+    this.webSocketService.ws_subject.pipe(retry(), repeat()).subscribe(
       msg => this.update_live_image(msg.image, msg.transition),
-      err => console.log(err),
+      err =>console.log(err),
       () => console.log("webSocket closed")
     );
   }
@@ -47,8 +48,7 @@ export class SceneComponent implements OnInit {
     if (transition == 'fade') {
       this.live_img_fader_src = this.live_img_src;
       this.fade_status = 'visible';
-      setTimeout(() =>
-        this.fade_status = 'hidden', 0);
+      setTimeout(() => this.fade_status = 'hidden', 0);
     }
 
     this.live_img_src = environment.baseAPI + '/api/img/';

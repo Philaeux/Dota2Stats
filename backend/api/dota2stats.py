@@ -5,11 +5,11 @@ import urllib
 from tornado.web import Application, RequestHandler
 from tornado.websocket import WebSocketHandler
 from tornado.options import define, options, parse_config_file
-from tornado_sqlalchemy import as_future, make_session_factory, SessionMixin, declarative_base
+from tornado_sqlalchemy import as_future, make_session_factory, SessionMixin
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-from image_generator import ImageGenerator
+from image_generation.image_generator import ImageGenerator
 from models import DotaHeroes, GroupStage, DotaProTeam
 
 
@@ -83,6 +83,24 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
                 self.write({"success": False, "error": "Invalid id specified"})
                 return
             await self.image_generator.generate_post_game(int(request_body["game_id"]))
+            self.write(
+                {"success": True, "error": ""}
+            )
+        elif request_body["image_type"] == "tournament_globals":
+            await self.image_generator.generate_tournament_globals()
+            self.write(
+                {"success": True, "error": ""}
+            )
+        elif request_body["image_type"] == "team_face_off":
+            if ("team_id_1" not in request_body
+                    or not request_body["team_id_1"].isdigit()
+                    or int(request_body["team_id_1"]) <= 0
+                    or "team_id_2" not in request_body
+                    or not request_body["team_id_2"].isdigit()
+                    or int(request_body["team_id_2"]) <= 0):
+                self.write({"success": False, "error": "Invalid team_id_x specified"})
+                return
+            await self.image_generator.generate_team_face_off(int(request_body["team_id_1"]), int(request_body["team_id_2"]))
             self.write(
                 {"success": True, "error": ""}
             )
