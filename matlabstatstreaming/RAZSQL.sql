@@ -1,0 +1,14 @@
+begin;
+delete from openmatch;
+ALTER SEQUENCE public.openmatch_id_seq RESTART WITH 1;
+delete from openplayermatch;
+ALTER SEQUENCE public.openplayermatch_id_seq RESTART WITH 1;
+delete from valvematch;
+ALTER SEQUENCE public.valvematch_id_seq RESTART WITH 1;
+delete from valveplayermatch;
+ALTER SEQUENCE public.valveplayermatch_id_seq RESTART WITH 1;
+delete from matchs;
+ALTER SEQUENCE public.matchs_id_seq RESTART WITH 1;
+delete from execmatch;
+ALTER SEQUENCE public.execmatch_id_seq RESTART WITH 1;
+commit;
