@@ -29,10 +29,18 @@ if strcmp(listsqlplayer,'No Data')==1
         else
             playersqladd.player_name{1,1}=playerinfo.profile.personaname;
         end
-        if player.player_slot(i,1)<100
-            playersqladd.team_id=team_id.radiant_team_id;
+        if isfield(playerinfo.profile,'name')
+            if ~isempty(playerinfo.profile.name)
+                playersqladd.player_name{1,1}=playerinfo.profile.name;
+            else
+                if ~isempty(playerinfo.profile.personaname)
+                    playersqladd.player_name{1,1}=playerinfo.profile.personaname;
+                else
+                    playersqladd.player_name{1,1}='null';
+                end
+            end
         else
-            playersqladd.team_id=team_id.dire_team_id;
+            playersqladd.player_name{1,1}=playerinfo.profile.personaname;
         end
         playersql=[playersql;playersqladd];
     end
@@ -46,10 +54,18 @@ else
         for i=1:length(listplayeradd)
             playersqladd=table();
             playersqladd.id=NaN;
-            playersqladd.player_id=listplayer(i);
-            playerinfo=ApiGetPlayerOpen(listplayer(i));
+            playersqladd.player_id=listplayeradd(i);
+            playerinfo=ApiGetPlayerOpen(listplayeradd(i));
             if isfield(playerinfo.profile,'name')
-                playersqladd.player_name{1,1}=playerinfo.profile.name;
+                if ~isempty(playerinfo.profile.name)
+                    playersqladd.player_name{1,1}=playerinfo.profile.name;
+                else
+                    if ~isempty(playerinfo.profile.personaname)
+                        playersqladd.player_name{1,1}=playerinfo.profile.personaname;
+                    else
+                        playersqladd.player_name{1,1}='null';
+                    end
+                end
             else
                 playersqladd.player_name{1,1}=playerinfo.profile.personaname;
             end
@@ -74,7 +90,7 @@ else
                     pgsqlexec(conn,['update public.player set team_id=''',num2str(team_id.dire_team_id),''' where player_id=',num2str(listplayercheck(i))]);
                 end
             end
-        end           
+        end
     end
 end
 end

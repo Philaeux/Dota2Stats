@@ -7,4 +7,5 @@ backend/api/assets/generated/*.png
 backend/api/assets/generated/*.json
 backend/api/__pycache__
 matlabstatstreaming/sql.mat
+matlabstatstreaming/*.asv
 

@@ -105,7 +105,7 @@ try
     %% liste des match a execvalve<5
     rqvalve='select match_id,id,execvalveplayer,execvalvepicks from public.execmatch where execvalveplayer<5 or execvalvepicks<5';
     newmatchvalve=pgsqldata(conn,rqvalve);
-    if ~isempty(newmatchvalve)
+    if strcmp(newmatchvalve,'No Data')==0
         for i=1:height(newmatchvalve)
             %% Recupération des info match source valve
             datavalve=ApiGetValve(newmatchvalve.match_id(i));
@@ -117,10 +117,11 @@ try
     %% liste des match a execopen<5
     rqopen='select match_id,id,execopenplayer,execopenpicks from public.execmatch where execopenplayer<5 or execopenpicks<5';
     newmatchopen=pgsqldata(conn,rqopen);
-    if ~isempty(newmatchopen)
+    if strcmp(newmatchopen,'No Data')==0
         for i=1:height(newmatchopen)
             %% Récupération des info match source opendota
             dataod=ApiGetStatOpen(newmatchopen.match_id(i));
+            init_player(conn,dataod.players,newmatchopen.match_id(i));
             execopen(dataod,conn,newmatchopen);
         end
     end
