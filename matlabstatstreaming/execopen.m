@@ -453,7 +453,6 @@ try
                 
                 
                 %% insertion sql
-                execmatchadd=execmatch(execmatch.match_id==dataod.match_id,:);
                 %% verifier si le match exist
                 RQexist=['select id from public.openmatch where openmatch.match_id=',num2str(dataod.match_id)];
                 existsql=pgsqldata(conn,RQexist);
@@ -466,14 +465,14 @@ try
             end
         else
             disp('Traitement nOK pas de teamfight dans la partie')
-            execmatchadd.execvalveplayer=8;
-            execmatchadd.execvalvepicks=8;
+            execmatchadd.execopenplayer=8;
+            execmatchadd.execopenpicks=8;
             CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',dataod.match_id,'public','update');
         end
     else
         disp('Traitement nOK autre mode que cm')
-        execmatchadd.execvalveplayer=7;
-        execmatchadd.execvalvepicks=7;
+        execmatchadd.execopenplayer=7;
+        execmatchadd.execopenpicks=7;
         CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',dataod.match_id,'public','update');
     end
     CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',dataod.match_id,'public','update');

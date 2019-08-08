@@ -1,7 +1,9 @@
 function updateteam(conn,TktMatch)
 
-
-teamtkt=unique([TktMatch.result.matches.radiant_team_id,TktMatch.result.matches.dire_team_id]);
+series_id = [TktMatch.result.matches.series_id].';
+radiant_team_id = [TktMatch.result.matches.radiant_team_id].';
+dire_team_id = [TktMatch.result.matches.dire_team_id].';
+teamtkt=unique([radiant_team_id(series_id~=0);dire_team_id(series_id~=0)]);
 teaminfo=pgsqldata(conn,'select * from public.team');
 teamsql=table();
 if strcmp(teaminfo,'No Data')==1

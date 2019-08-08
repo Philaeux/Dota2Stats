@@ -119,10 +119,10 @@ try
                 existsql3=pgsqldata(conn,RQexist2);
                 if strcmp(existsql3,'No Data')==1
                     disp('transact nOK')
-                    execmatchadd.execopenplayer=0;
+                    execmatchadd.execvalveplayer=0;
                 else
                     disp('transact OK')
-                    execmatchadd.execopenplayer=6;
+                    execmatchadd.execvalveplayer=6;
                 end
             else
                 pgsqlexec(conn,['delete from public.valveplayermatch where valveplayermatch.match_id=',num2str(datavalve.result.match_id)])
@@ -130,10 +130,10 @@ try
                 existsql4=pgsqldata(conn,RQexist2);
                 if strcmp(existsql4,'No Data')==1
                     disp('transact nOK')
-                    execmatchadd.execopenplayer=0;
+                    execmatchadd.execvalveplayer=0;
                 else
                     disp('transact OK')
-                    execmatchadd.execopenplayer=6;
+                    execmatchadd.execvalveplayer=6;
                 end
             end
             execmatchadd.execvalveplayer=6;
@@ -239,6 +239,7 @@ try
                 CBM_PGSQL_inject1l_light(conn,'valvematch',picks.Properties.VariableNames,picks,'id',existsql.id,'public','update');
             end
             execmatchadd.execvalvepicks=6;
+            CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',datavalve.result.match_id,'public','update');
             disp('Traitement match OK')
         end
     else

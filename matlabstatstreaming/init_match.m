@@ -38,4 +38,5 @@ else
 end
 matchsql.radiant_team_id(:,1)=matchs.radiant_team_id;
 matchsql.dire_team_id(:,1)=matchs.dire_team_id;
+matchsql=matchsql(matchsql.series_id~=0,:);
 end %function
