@@ -103,15 +103,15 @@ conn = database('ShiBaSQL','shiba','FTShiBa26');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% algo de fusion
 %% Récupération des informations en base
-player_match_open=pgsqldata(conn,'select * from shiba.public.openplayermatch');
-match_open=pgsqldata(conn,'select * from shiba.public.openmatch');
-player_match_valve=pgsqldata(conn,'select * from shiba.public.valveplayermatch');
-match_valve=pgsqldata(conn,'select * from shiba.public.valvematch');
+player_match_open=pgsqldata(conn,'select * from public.openplayermatch');
+match_open=pgsqldata(conn,'select * from public.openmatch');
+player_match_valve=pgsqldata(conn,'select * from public.valveplayermatch');
+match_valve=pgsqldata(conn,'select * from public.valvematch');
 %match=pgsqldata(conn,'select * from shiba.public.matchs');
 %tn=pgsqldata(conn,'select * from shiba.public.tn');
 %team=pgsqldata(conn,'select * from shiba.public.team');
 %player=pgsqldata(conn,'select * from shiba.public.player');
-hero=pgsqldata(conn,'select * from shiba.public.hero');
+hero=pgsqldata(conn,'select * from public.hero');
 
 %% stat global player sur les 4 derniers tournois
 Stat_global_player(conn,player_match_open)

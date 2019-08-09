@@ -83,7 +83,7 @@ for j=1:numberOfrows
                         else
                             insertData = [insertData,'''',data{j,i},''',']; %#ok<AGROW>
                         end
-                    elseif isa(data{j,i},'double')
+                    elseif isa(data{j,i},'double')|| isa(data{j,i},'logical')
                         if isnan(data{j,i})==1
                             insertData = [insertData,'null',',' ]; %#ok<AGROW>
                         else
