@@ -80,7 +80,7 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
             if ('game_id' not in request_body
                     or not request_body["game_id"].isdigit()
                     or int(request_body["game_id"]) <= 0):
-                self.write({"success": False, "error": "Invalid id specified"})
+                self.write({"success": False, "error": "Invalid game id specified"})
                 return
             await self.image_generator.generate_post_game(int(request_body["game_id"]))
             self.write(
@@ -100,7 +100,22 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
                     or int(request_body["team_id_2"]) <= 0):
                 self.write({"success": False, "error": "Invalid team_id_x specified"})
                 return
-            await self.image_generator.generate_team_face_off(int(request_body["team_id_1"]), int(request_body["team_id_2"]))
+            await self.image_generator.generate_team_face_off(int(request_body["team_id_1"]),
+                                                              int(request_body["team_id_2"]))
+            self.write(
+                {"success": True, "error": ""}
+            )
+        elif request_body["image_type"] == "mvp":
+            if ("game_id" not in request_body
+                    or not request_body["game_id"].isdigit()
+                    or int(request_body["game_id"]) <= 0):
+                self.write({"success": False, "error": "Invalid game id specified"})
+                return
+            if ("slot" not in request_body
+                    or request_body["slot"] not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]):
+                self.write({"success": False, "error": "Wrong slot"})
+                return
+            await self.image_generator.generate_mvp(int(request_body["game_id"]), int(request_body["slot"]))
             self.write(
                 {"success": True, "error": ""}
             )

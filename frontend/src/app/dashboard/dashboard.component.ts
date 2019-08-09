@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   selected_team_2: string;
   group_stage_team: string;
   game_id: string;
+  slot: string;
 
   preview_img_src: string;
 
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit {
     this.selected_team_2 = '39';
     this.group_stage_team = '39';
     this.game_id = '4874722743';
+    this.slot = "0";
 
     this.rebuild_preview();
     this.refresh_group_stage();
@@ -59,6 +61,8 @@ export class DashboardComponent implements OnInit {
       case 'team_face_off':
         image_name += this.image_type + '-' + this.selected_team + '-' + this.selected_team_2;
         break;
+      case 'mvp':
+        image_name += this.image_type + '-' + this.game_id;
     }
     image_name += ".png";
 
@@ -84,6 +88,11 @@ export class DashboardComponent implements OnInit {
       case "team_face_off":
         payload["team_id_1"] = this.selected_team;
         payload["team_id_2"] = this.selected_team_2;
+        break;
+      case "mvp":
+        payload["game_id"] = this.game_id;
+        payload["slot"] = this.slot;
+        break;
     }
     this.http.post<APIResult>(environment.baseAPI + "/api/generate", payload).subscribe(json => {
       if (json.success) {

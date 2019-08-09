@@ -175,7 +175,7 @@ class PostGameMixin:
             image_draw.text([hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x) + int(
                 item_height / 2) + 3 * item_padding,
                              hero_y[player['player_slot']] + item_height + item_padding],
-                            text=str(player['hero_damage']), font=rift_dmg, fill=self.colors['orange'])
+                            text=str(player['hero_damage']), font=rift_dmg, fill=self.colors['white'])
 
         # Draw graph
         radiant_gold_adv = game_json['radiant_gold_adv']

@@ -10,6 +10,7 @@
           <mat-option value="post_game">Post Game</mat-option>
           <mat-option value="tournament_globals">Tournament Globals</mat-option>
           <mat-option value="team_face_off">Team Face-off</mat-option>
+          <mat-option value="mvp">MVP</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -28,8 +29,23 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="padded_field" *ngIf="image_type == 'post_game'">
-        <input matInput placeholder="Match Id" [(ngModel)]="game_id">
+      <mat-form-field class="padded_field" *ngIf="image_type == 'post_game' || image_type == 'mvp'">
+        <input matInput placeholder="Match Id" [(ngModel)]="game_id" (change)="rebuild_preview()">
+      </mat-form-field>
+
+      <mat-form-field class="padded_field" *ngIf="image_type == 'mvp'">
+        <mat-select placeholder="Slot" [(ngModel)]="slot">
+          <mat-option value="0">0</mat-option>
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+          <mat-option value="6">6</mat-option>
+          <mat-option value="7">7</mat-option>
+          <mat-option value="8">8</mat-option>
+          <mat-option value="9">9</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 

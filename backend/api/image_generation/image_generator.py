@@ -10,9 +10,11 @@ from image_generation.mixins.group_stage import GroupStageMixin
 from image_generation.mixins.post_game import PostGameMixin
 from image_generation.mixins.tournament_globals import TournamentGlobalsMixin
 from image_generation.mixins.team_face_off import TeamFaceOffMixin
+from image_generation.mixins.mvp import MvpMixin
 
 
-class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, TournamentGlobalsMixin, TeamFaceOffMixin):
+class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, TournamentGlobalsMixin, TeamFaceOffMixin,
+                     MvpMixin):
 
     colors = {
         'hero_blue': ImageColor.getrgb('#3375ff'),

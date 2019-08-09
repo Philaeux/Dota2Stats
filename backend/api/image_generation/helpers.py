@@ -75,3 +75,17 @@ def draw_image_advanced(composition, image, position, size, alpha):
                         mask=team_logo)
     in_place_logo = Image.blend(Image.new('RGBA', (composition.size[0], composition.size[1])), in_place_logo, alpha)
     return Image.alpha_composite(composition, in_place_logo)
+
+
+def draw_image_advanced_left(composition, image, position, size, alpha):
+    new_width = int(image.size[0] * size[1] / image.size[1])
+    new_height = size[1]
+
+    team_logo = image.resize([new_width, new_height], Image.LANCZOS)
+    in_place_logo = Image.new('RGBA', (composition.size[0], composition.size[1]))
+    in_place_logo.paste(team_logo,
+                        box=[position[0],
+                             position[1]],
+                        mask=team_logo)
+    in_place_logo = Image.blend(Image.new('RGBA', (composition.size[0], composition.size[1])), in_place_logo, alpha)
+    return Image.alpha_composite(composition, in_place_logo)

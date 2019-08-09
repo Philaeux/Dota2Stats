@@ -149,9 +149,9 @@ class TeamFaceOffMixin:
                                '{0:.1f} %'.format(team_stats[1].mean_pct_bounty * 100), font=rift_text,
                                fill=self.colors['yellow'])
         draw_text_center_align(image_draw, [480, 30], '{0}'.format(teams[0].name), font=rift_title,
-                               fill=self.colors['ti_green'])
+                               fill=self.colors['ti_purple'])
         draw_text_center_align(image_draw, [1440, 30], '{0}'.format(teams[1].name), font=rift_title,
-                               fill=self.colors['ti_green'])
+                               fill=self.colors['ti_purple'])
         draw_text_center_align(image_draw, [960 - games_x, rows[5]], 'GAMES', font=rift_middle,
                                fill=self.colors['white'])
         draw_text_center_align(image_draw, [960 - games_x, rows[5] + 50],

@@ -35,7 +35,7 @@ class GroupStageMixin:
             726228: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             1375614: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
             1838315: {'offset': [75, 45], 'size': [None, 55], 'suffix': '-silver'},
-            1883502: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
+            1883502: {'offset': [75, 45], 'size': [None, 65], 'suffix': '-ti9'},
             2108395: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             2586976: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             2626685: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
