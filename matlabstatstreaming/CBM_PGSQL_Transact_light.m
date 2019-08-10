@@ -58,11 +58,11 @@ for j=1:numberOfrows
                             insertData = [insertData,'''',data{j,i},'''']; %#ok<AGROW>
                             
                         end
-                    elseif isa(data{j,i},'double')
+                    elseif isa(data{j,i},'double') || isa(data{j,i},'logical')
                         if isnan(data{j,i})==1
                             insertData = [insertData,'null']; %#ok<AGROW>
                         else
-                           insertData = [insertData,'''',num2str(data{j,i}),'''']; %#ok<AGROW>
+                           insertData = [insertData,'',num2str(data{j,i}),'']; %#ok<AGROW>
 %                             insertData = [insertData,'',num2str(data{j,i}),'']; %#ok<AGROW>
                         end
                     elseif isa(data{j,i},'datetime')

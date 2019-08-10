@@ -131,22 +131,30 @@ try
     %% Récupération des informations en base
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    match_open=pgsqldata(conn,'select * from public.openmatch');
-    player_match_valve=pgsqldata(conn,'select * from public.valveplayermatch');
-    match_valve=pgsqldata(conn,'select * from public.valvematch');
-    hero=pgsqldata(conn,'select * from public.hero');
+%     match_open=pgsqldata(conn,'select * from public.openmatch');
+%     player_match_open=pgsqldata(conn,'select * from public.openplayermatch');
+%     player_match_valve=pgsqldata(conn,'select * from public.valveplayermatch');
+%     match_valve=pgsqldata(conn,'select * from public.valvematch');
+%     hero=pgsqldata(conn,'select * from public.hero');
     
-    %% stat tn
+    %% stat sur un tournois
     %% boucle pour le tournois add
-    
-    Stat_tn_player(conn,match_open,tn_id)
-    Stat_tn_team(conn,match_valve,tn_id)
+    Stat_tn_player(conn,tn_id,'main')
+    Stat_tn_player(conn,tn_id,'qualif')
+    Stat_tn_player(conn,tn_id,'all')
+    Stat_tn_team(conn,tn_id,'main')
     Stat_tn_hero(conn,hero,player_match_valve,match_valve,tn_id)
     Stat_tn_hero_team(conn,player_match_valve,match_valve,tn_id)
     Stat_tn_player_hero(conn,hero,player_match_valve,match_valve,tn_id)
     Stat_tn_tn(conn,match_valve,tn_id)
     
-    %% boucle globa
+    %% boucle global sur le patch
+    Stat_global_hero(conn,hero,player_match_valve,match_valve)
+    Stat_global_player(conn,player_match_open)
+    Stat_global_team(conn,match_valve)
+    
+    %% advanced statistique
+    
     
     
 catch ME %#ok<NASGU>
