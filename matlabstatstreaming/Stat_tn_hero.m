@@ -3,6 +3,7 @@ disp('Traitement des stats TN Heros')
 hero=pgsqldata(conn,'select * from public.hero');
 player_match_valve=pgsqldata(conn,['select * from public.join_valveplayermatch where tn_id=',num2str(tn_id)]);
 match_valve=pgsqldata(conn,['select * from public.join_valvematch where id_tn=',num2str(tn_id)]);
+
 switch type
     case 'main'
         StatHero=table();

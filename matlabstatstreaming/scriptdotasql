@@ -1337,8 +1337,9 @@ CREATE TABLE public.stat_tn_player (
 
 CREATE TABLE public.stat_tn_player_hero (
 	id serial NOT NULL,
-	id int NULL,
+	hero_id int NULL,
 	id_tn int NULL,
+    is_qualif int NULL,
 	account_id bigint NULL,
 	nb_pick numeric(38,6) NULL,
 	nb_ban numeric(38,6) NULL,
@@ -1391,7 +1392,7 @@ CREATE TABLE public.stat_tn_player_hero (
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
 	tot_hero_healing numeric(38,6) NULL,
-	CONSTRAINT stat_tn_player_hero_fk FOREIGN KEY (id) REFERENCES hero(id),
+	CONSTRAINT stat_tn_player_hero_fk FOREIGN KEY (hero_id) REFERENCES hero(id),
 	CONSTRAINT stat_tn_player_hero_fk_1 FOREIGN KEY (account_id) REFERENCES player(player_id),
 	CONSTRAINT stat_tn_player_hero_fk_2 FOREIGN KEY (id_tn) REFERENCES tn(id_tn)
 );
@@ -1438,8 +1439,9 @@ CREATE TABLE public.stat_tn_team (
 
 CREATE TABLE public.stat_tn_team_hero (
 	id serial NOT NULL,
-	id int NULL,
+    hero_id int NULL,
 	id_tn int NULL,
+    is_qualif int NULL,
 	team_id int NULL,
 	nb_pick numeric(38,6) NULL,
 	nb_pick_against numeric(38,6) NULL,
@@ -1494,9 +1496,9 @@ CREATE TABLE public.stat_tn_team_hero (
 	max_hero_healing numeric(38,6) NULL,
 	min_hero_healing numeric(38,6) NULL,
 	tot_hero_healing numeric(38,6) NULL,
-	CONSTRAINT stat_tn_team_hero_fk FOREIGN KEY (id_tn) REFERENCES tn(tn_id),
+	CONSTRAINT stat_tn_team_hero_fk FOREIGN KEY (id_tn) REFERENCES tn(id_tn),
 	CONSTRAINT stat_tn_team_hero_fk2 FOREIGN KEY (team_id) REFERENCES team(team_id),
-	CONSTRAINT stat_tn_team_hero_fk3 FOREIGN KEY (id) REFERENCES hero(id)
+	CONSTRAINT stat_tn_team_hero_fk3 FOREIGN KEY (hero_id) REFERENCES hero(id)
 );
 
 CREATE TABLE public.stat_tn_tn (

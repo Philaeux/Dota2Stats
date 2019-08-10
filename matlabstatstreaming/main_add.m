@@ -141,23 +141,31 @@ try
     %% boucle pour le tournois add
     tn_with_qualif=pgsqldata(conn,['select withqualif from public.tn where id_tn=',num2str(tn_id)]);
     if tn_with_qualif.withqualif==1
-%         Stat_tn_player(conn,tn_id,'main')
-%         Stat_tn_player(conn,tn_id,'qualif')
-%         Stat_tn_player(conn,tn_id,'all')
-%         Stat_tn_team(conn,tn_id,'main')
-%         Stat_tn_team(conn,tn_id,'qualif')
-%         Stat_tn_team(conn,tn_id,'all')
-        Stat_tn_hero(conn,tn_id,'main')
-        Stat_tn_hero(conn,tn_id,'qualif')
-        Stat_tn_hero(conn,tn_id,'all')
+        %         Stat_tn_player(conn,tn_id,'main')
+        %         Stat_tn_player(conn,tn_id,'qualif')
+        %         Stat_tn_player(conn,tn_id,'all')
+        %         Stat_tn_team(conn,tn_id,'main')
+        %         Stat_tn_team(conn,tn_id,'qualif')
+        %         Stat_tn_team(conn,tn_id,'all')
+        %         Stat_tn_hero(conn,tn_id,'main')
+        %         Stat_tn_hero(conn,tn_id,'qualif')
+        %         Stat_tn_hero(conn,tn_id,'all')
+        %         Stat_tn_hero_team(conn,tn_id,'main')
+        %         Stat_tn_hero_team(conn,tn_id,'qualif')
+        %         Stat_tn_hero_team(conn,tn_id,'all')
+        Stat_tn_player_hero(conn,tn_id,'main')
+        Stat_tn_player_hero(conn,tn_id,'qualif')
+        Stat_tn_player_hero(conn,tn_id,'all')
     else
         Stat_tn_player(conn,tn_id,'all')
         Stat_tn_team(conn,tn_id,'all')
         Stat_tn_hero(conn,tn_id,'all')
+        Stat_tn_hero_team(conn,tn_id,'all')
+        Stat_tn_player_hero(conn,tn_id,'all')
     end
-    Stat_tn_hero(conn,hero,player_match_valve,match_valve,tn_id)
-    Stat_tn_hero_team(conn,player_match_valve,match_valve,tn_id)
-    Stat_tn_player_hero(conn,hero,player_match_valve,match_valve,tn_id)
+    
+    
+    Stat_tn_player_hero(conn,tn_id,'main')
     Stat_tn_tn(conn,match_valve,tn_id)
     
     %% boucle global sur le patch
