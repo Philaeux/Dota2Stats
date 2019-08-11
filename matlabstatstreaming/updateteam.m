@@ -8,7 +8,7 @@ teaminfo=pgsqldata(conn,'select * from public.team');
 teamsql=table();
 if strcmp(teaminfo,'No Data')==1
     for i=1:length(listteam)
-        teamodota=webread(['https://api.opendota.com/api/teams/',num2str(listteam(i))]);
+        teamodota=ApiGetTeamOpen(listteam(i));
         teamsqladd=table();
         teamsqladd.id=NaN;
         teamsqladd.team_id=teamodota.team_id;
@@ -24,7 +24,7 @@ else
     if sum(delta)~=0 %toutes les equipe ne sont pas déjà en table
         listnewteam=teamtkt(delta==1);
         for i=1:length(listnewteam)
-            teamodota=webread(['https://api.opendota.com/api/teams/',num2str(listnewteam(i))]);
+            teamodota=ApiGetTeamOpen(listnewteam(i));
             teamsqladd=table();
             teamsqladd.id=NaN;
             teamsqladd.team_id=teamodota.team_id;

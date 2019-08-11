@@ -1,9 +1,9 @@
-function data=ApiGetPlayerOpen(id_player)
+function data=ApiGetTeamOpen(id_team)
 testvalve=0;
 while testvalve==0
     try
-        id_game_rq=num2str(round(id_player));
-        RQString=['https://api.opendota.com/api/players/',id_game_rq];
+        id_game_rq=num2str(round(id_team));
+        RQString=['https://api.opendota.com/api/teams/',id_game_rq];
         options = weboptions('Timeout',120);
         data=webread(RQString,options);
         pause(1)

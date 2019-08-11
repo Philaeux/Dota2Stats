@@ -23,7 +23,7 @@ if strcmp(listsqlplayer,'No Data')==1
         playersqladd=table();
         playersqladd.id=NaN;
         playersqladd.player_id=listplayer(i);
-        playerinfo=webread(['https://api.opendota.com/api/players/',num2str(listplayer(i))]);
+        playerinfo=ApiGetPlayerOpen(listplayer(i));
         if isfield(playerinfo.profile,'name')
             playersqladd.player_name{1,1}=playerinfo.profile.name;
         else
