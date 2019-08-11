@@ -141,33 +141,44 @@ try
     %% boucle pour le tournois add
     tn_with_qualif=pgsqldata(conn,['select withqualif from public.tn where id_tn=',num2str(tn_id)]);
     if tn_with_qualif.withqualif==1
-        %         Stat_tn_player(conn,tn_id,'main')
-        %         Stat_tn_player(conn,tn_id,'qualif')
-        %         Stat_tn_player(conn,tn_id,'all')
-        %         Stat_tn_team(conn,tn_id,'main')
-        %         Stat_tn_team(conn,tn_id,'qualif')
-        %         Stat_tn_team(conn,tn_id,'all')
-        %         Stat_tn_hero(conn,tn_id,'main')
-        %         Stat_tn_hero(conn,tn_id,'qualif')
-        %         Stat_tn_hero(conn,tn_id,'all')
+        Stat_tn_player(conn,tn_id,'main')
+        Stat_tn_player(conn,tn_id,'qualif')
+        Stat_tn_player(conn,tn_id,'all')
+        Stat_tn_team(conn,tn_id,'main')
+        Stat_tn_team(conn,tn_id,'qualif')
+        Stat_tn_team(conn,tn_id,'all')
+        Stat_tn_hero(conn,tn_id,'main')
+        Stat_tn_hero(conn,tn_id,'qualif')
+        Stat_tn_hero(conn,tn_id,'all')
         Stat_tn_hero_team(conn,tn_id,'main')
         Stat_tn_hero_team(conn,tn_id,'qualif')
         Stat_tn_hero_team(conn,tn_id,'all')
+        Stat_tn_player_hero(conn,tn_id,'main')
+        Stat_tn_player_hero(conn,tn_id,'qualif')
+        Stat_tn_player_hero(conn,tn_id,'all')
     else
         Stat_tn_player(conn,tn_id,'all')
         Stat_tn_team(conn,tn_id,'all')
         Stat_tn_hero(conn,tn_id,'all')
         Stat_tn_hero_team(conn,tn_id,'all')
+        Stat_tn_player_hero(conn,tn_id,'all')
     end
     
-
-    Stat_tn_player_hero(conn,tn_id,'main')
-    Stat_tn_tn(conn,match_valve,tn_id)
+    %% boucle stat sur le patch
+    Stat_patch_player(conn)
+    Stat_patch_team(conn)
+    Stat_patch_hero(conn)
+    Stat_patch_team_hero(conn)
+    Stat_patch_player_hero(conn)
+    %Stat_patch_tn(conn)
     
-    %% boucle global sur le patch
-    Stat_global_hero(conn,hero,player_match_valve,match_valve)
-    Stat_global_player(conn,player_match_open)
-    Stat_global_team(conn,match_valve)
+    %% boucle stat sur le global bdd
+    Stat_global_player(conn)
+    Stat_global_team(conn)
+    Stat_global_hero(conn)
+    Stat_global_team_hero(conn)
+    Stat_global_player_hero(conn)
+    %Stat_global_tn(conn)
     
     %% advanced statistique
     
