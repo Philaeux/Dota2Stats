@@ -103,7 +103,7 @@ try
         
         %% stat à update
         %% boucle pour le tournois add
-        nb_nm_wth_qualif=heigth(newmatch)
+        nb_nm_wth_qualif=heigth(newmatch);
         tn_with_qualif=
         if tn_with_qualif.withqualif==1
             Stat_tn_player(conn,tn_id,'main')
