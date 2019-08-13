@@ -87,12 +87,14 @@ try
         CBM_PGSQL_Transact_light(conn,'execmatch',execmatch.Properties.VariableNames,execmatch,'id','public')
     else
         newmatch=setxor(matchsql.match_id,sql_match.match_id);
-        if isempty(newmatch)
+        newmatchsql=table();
+        newmatchsql=matchsql(ismember(matchsql.match_id,newmatch),:);
+        if isempty(newmatchsql)
             disp('pas de nouveau match a ajouter')
         else
-            CBM_PGSQL_Transact_light(conn,'matchs',newmatch.Properties.VariableNames,newmatch,'id','public')
+            CBM_PGSQL_Transact_light(conn,'matchs',newmatchsql.Properties.VariableNames,newmatchsql,'id','public')
             execmatch=table();
-            execmatch.match_id=newmatch.match_id;
+            execmatch.match_id=newmatchsql.match_id;
             execmatch.id(:,1)=NaN;
             execmatch.execvalveplayer(:,1)=0;
             execmatch.execvalvepicks(:,1)=0;
@@ -164,7 +166,7 @@ try
     Stat_patch_hero(conn)
     Stat_patch_team_hero(conn)
     Stat_patch_player_hero(conn)
-    %Stat_patch_tn(conn)
+    Stat_patch_tn(conn)
     
     %% boucle stat sur le global bdd
     Stat_global_player(conn)

@@ -1,19 +1,26 @@
-function Stat_global_tn(conn,match_valve)
-
-%% init
-stat_tn=table();
-
+function Stat_patch_tn(conn)
+disp('Traitement des stats patch Tournois')
+patch=pgsqldata(conn,'select * from public.patch');
+patchnum=max(patch.patchnum);
+match_valve=pgsqldata(conn,'select * from public.join_valvematch');
 %% algo
+CalcStatTeam=match_valve(match_valve.patch_num==patchnum,:);
+stat_tn_add=table();
 if ~isempty(match_valve)
-    stat_tn.nb_match=height(match_valve);
-    [stat_tn]=genstat(match_valve,'radiant_win',stat_tn);
-    [stat_tn]=genstat(match_valve,'duration',stat_tn);
+    stat_tn_add.patch_num=patchnum;
+    stat_tn_add.nb_match=height(CalcStatTeam);
+    [stat_tn_add]=genstat(CalcStatTeam,'radiant_win',stat_tn_add);
+    [stat_tn_add]=genstat(CalcStatTeam,'duration',stat_tn_add);
 end
-
 %% insertion SQL
-pgsqlexec(conn,'delete from grenouilleapi.public.stat_global_tn')
-insert(conn,'grenouilleapi.public.stat_global_tn',{'nb_match','mean_radiant_win','max_radiant_win','min_radiant_win','tot_radiant_win','mean_duration','max_duration','min_duration','tot_duration'},stat_tn);
+%% insertion SQL StatPlayer
+rqexist=['select id from public.stat_patch_tn where patch_num=',num2str(patchnum)];
+exist1=pgsqldata(conn,rqexist);
+if strcmp(exist1,'No Data')==0
+    pgsqlexec(conn,['delete from public.stat_patch_tn where patch_num=',num2str(patchnum)])
+end
+CBM_PGSQL_Transact_light(conn,'stat_patch_tn',stat_tn_add.Properties.VariableNames,stat_tn_add,'id','public');
 
-
+disp('Traitement OK')
 end
 
