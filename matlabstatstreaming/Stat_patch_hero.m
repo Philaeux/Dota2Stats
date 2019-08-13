@@ -65,10 +65,10 @@ if nb_match>0
     end
     
     %% insertion SQL StatPlayer
-    rqexist=['select id from public.stat_tn_hero where patch_num=',num2str(patchnum)];
+    rqexist=['select id from public.stat_patch_hero where patch_num=',num2str(patchnum)];
     exist1=pgsqldata(conn,rqexist);
     if strcmp(exist1,'No Data')==0
-        pgsqlexec(conn,['delete from public.stat_tn_hero where patch_num=',num2str(patchnum)])
+        pgsqlexec(conn,['delete from public.stat_patch_hero where patch_num=',num2str(patchnum)])
     end
     CBM_PGSQL_Transact_light(conn,'stat_patch_hero',StatHero.Properties.VariableNames,StatHero,'id','public');
 end
