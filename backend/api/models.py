@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, BigInteger, Column, String
+from sqlalchemy import Integer, BigInteger, Column, String, Numeric
 from tornado_sqlalchemy import declarative_base
 
 DeclarativeBase = declarative_base()
@@ -56,3 +56,48 @@ class DotaProPlayer(DeclarativeBase):
     nickname = Column(String(255), nullable=False, default="")
     name = Column(String(255), nullable=False, default="")
     position = Column(Integer, nullable=False,default=0)
+
+
+class DotaJoinGlobalHeroes(DeclarativeBase):
+    __tablename__ = 'join_global_hero'
+
+    hero_id = Column(Integer, primary_key=True)
+    short_name = Column(String(255), unique=True)
+    display_name = Column(String(255), unique=True)
+    nb_pick = Column(Numeric())
+    nb_ban = Column(Numeric())
+    nb_match = Column(Numeric())
+    mean_is_win = Column(Numeric())
+
+
+class DotaJoinGlobal(DeclarativeBase):
+    __tablename__= 'join_global'
+
+    nb_match = Column(Numeric(), primary_key=True)
+    mean_radiant_win = Column(Numeric())
+    mean_duration = Column(Numeric())
+
+
+class DotaJoinGlobalTeam(DeclarativeBase):
+    __tablename__ = 'join_global_team'
+
+    team_id = Column(BigInteger, primary_key=True)
+    team_name = Column(String(255))
+    nb_match = Column(Numeric())
+    win_duration = Column(Numeric())
+    lose_duration = Column(Numeric())
+    mean_pct_bounty = Column(Numeric())
+
+
+class DotaJoinGlobalTeamHero(DeclarativeBase):
+    __tablename__ = 'join_global_team_hero'
+
+    team_id = Column(BigInteger, primary_key=True)
+    team_name = Column(String(255))
+    hero_id = Column(Integer, primary_key=True)
+    hero_short_name = Column(String(255))
+    hero_display_name = Column(String(255))
+    nb_match = Column(Numeric())
+    nb_pick = Column(Numeric())
+    nb_ban_against = Column(Numeric())
+    mean_is_win = Column(Numeric())

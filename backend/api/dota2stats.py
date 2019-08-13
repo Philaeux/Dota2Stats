@@ -121,6 +121,8 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
             )
         else:
             self.write({"success": False, "error": "Unknown image type"})
+        if self.session:
+            self.session.close()
 
 
 class SceneHandler(WebSocketHandler):
@@ -238,7 +240,7 @@ def make_app(database_url):
         (r"/api/scene", SceneHandler)
     ]
     return Application(urls,
-                       session_factory=make_session_factory(database_url),
+                       session_factory=make_session_factory(database_url, pool_size=100, max_overflow=200),
                        debug=True)
 
 

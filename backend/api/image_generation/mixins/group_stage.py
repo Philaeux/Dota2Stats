@@ -42,7 +42,7 @@ class GroupStageMixin:
             5065748: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             6209804: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             6214973: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
-            6666989: {'offset': [75, 45], 'size': [None, 72], 'suffix': ''},
+            7203342: {'offset': [75, 45], 'size': [None, 72], 'suffix': ''},
         }
 
         draw_text_outlined_center_align(image_draw, [480, 45], 'Groupe A', font=rift_bold_title,

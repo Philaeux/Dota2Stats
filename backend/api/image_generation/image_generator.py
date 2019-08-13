@@ -43,6 +43,7 @@ class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, Tournamen
     }
 
     def __init__(self, assets_root):
+        self.tournament_id = 10826
         self.session = None
         self.assets_root = assets_root
         self.generated_root = os.path.join(assets_root, "generated")
@@ -74,6 +75,7 @@ class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, Tournamen
 
     @staticmethod
     def duration_to_string(duration):
+        print(duration)
         duration_sec = math.ceil(duration) % 60
         duration_min = int(math.ceil(duration - duration_sec) / 60)
         return '{0:02}:{1:02}'.format(duration_min, duration_sec)

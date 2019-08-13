@@ -1,7 +1,7 @@
 const teams =
 [
   ["111474", "Alliance"],
-  ["6666989", "Chaos Esports Club"],
+  ["7203342", "Chaos Esports Club"],
   ["39", "Evil Geniuses"],
   ["350190", "Fnatic"],
   ["5065748", "Infamous"],

@@ -14,3 +14,8 @@
 .page-content {
   margin: 32px;
 }
+
+.scene-body {
+  overflow-y: hidden;
+  background-color: red;
+}
