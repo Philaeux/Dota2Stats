@@ -1,5 +1,5 @@
 function Stat_global_team_hero(conn)
-disp('Traitement des stats TN Team Heros')
+disp('Traitement des stats global Team Heros')
 player_match_valve=pgsqldata(conn,'select * from public.join_valveplayermatch');
 match_valve=pgsqldata(conn,'select * from public.join_valvematch');
 player=pgsqldata(conn,'select * from public.player');

@@ -1,5 +1,5 @@
 function Stat_global_player(conn)
-disp('Traitement des stats TN Player')
+disp('Traitement des stats global Player')
 
 %% init player
 player_match_open=pgsqldata(conn,'select * from public.join_stat_tn_player');
@@ -18,7 +18,7 @@ if nb_player>0
             [StatPlayerAdd]=genstat(CalcStatPlayer,'obs_placed',StatPlayerAdd);
             [StatPlayerAdd]=genstat(CalcStatPlayer,'sen_placed',StatPlayerAdd);
             [StatPlayerAdd]=genstat(CalcStatPlayer,'kills',StatPlayerAdd);
-            [StatPlayerAdd]=genstat(CalcStatPlayer,'deaths',StatPlayerAdd);
+            [StatPlayerAdd]=genstat(CalcStatPlayer,'deaths',StatPlayerAdd);0
             [StatPlayerAdd]=genstat(CalcStatPlayer,'assists',StatPlayerAdd);
             [StatPlayerAdd]=genstat(CalcStatPlayer,'camps_stacked',StatPlayerAdd);
             [StatPlayerAdd]=genstat(CalcStatPlayer,'creep_stacked',StatPlayerAdd);
