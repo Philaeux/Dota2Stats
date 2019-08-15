@@ -1,10 +1,11 @@
-function Stat_patch_tn(conn)
+function Stat_global_tn(conn)
 disp('Traitement des stats patch Tournois')
 match_valve=pgsqldata(conn,'select * from public.join_valvematch');
 %% algo
 CalcStatTeam=match_valve;
 stat_tn_add=table();
 if ~isempty(match_valve)
+    stat_tn_add.id=NaN;
     stat_tn_add.nb_match=height(CalcStatTeam);
     [stat_tn_add]=genstat(CalcStatTeam,'radiant_win',stat_tn_add);
     [stat_tn_add]=genstat(CalcStatTeam,'duration',stat_tn_add);

@@ -7,6 +7,7 @@ match_valve=pgsqldata(conn,'select * from public.join_valvematch');
 CalcStatTeam=match_valve(match_valve.patch_num==patchnum,:);
 stat_tn_add=table();
 if ~isempty(match_valve)
+    stat_tn_add.id=NaN;
     stat_tn_add.patch_num=patchnum;
     stat_tn_add.nb_match=height(CalcStatTeam);
     [stat_tn_add]=genstat(CalcStatTeam,'radiant_win',stat_tn_add);
