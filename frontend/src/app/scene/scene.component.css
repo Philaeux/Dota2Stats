@@ -10,6 +10,7 @@
 
 .live-container, .live-image {
   position: relative;
+  overflow-x: hidden;
   top: 0;
   left: 0;
 }

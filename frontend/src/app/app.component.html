@@ -1,7 +1,8 @@
-<div *ngIf="router.url !== '/scene'; else elseBlock">
+
+<div *ngIf="router.url !== '/live'; else elseBlock">
     <mat-toolbar class="mat-elevation-z6" color="primary" >
       <button mat-button routerLink="/"><mat-icon class="menu-icon">poll</mat-icon><span>Dota 2 Stats</span></button>
-      <button mat-button routerLink="/scene"><mat-icon class="menu-icon">videocam</mat-icon><span>Scene</span></button>
+      <button mat-button routerLink="/live"><mat-icon class="menu-icon">videocam</mat-icon><span>Live</span></button>
       <button mat-button routerLink="/dashboard"><mat-icon class="menu-icon">dashboard</mat-icon><span>Dashboard</span></button>
       <!--button mat-button routerLink="/users"><mat-icon class="menu-icon">supervisor_account</mat-icon><span>Users</span></button-->
 
