@@ -1,4 +1,4 @@
-function execmatch=execopen(dataod,conn,execmatch)
+function execmatchadd=execopen(dataod,conn,execmatch)
 
 
 
@@ -320,7 +320,39 @@ try
                     playersadd.bench_stunspm_pct=dataod.players{i,1}.benchmarks.stuns_per_min.pct;
                     playersadd.bench_lhten_value=dataod.players{i,1}.benchmarks.lhten.raw;
                     playersadd.bench_lhten_pct=dataod.players{i,1}.benchmarks.lhten.pct;
+                    %% chatweel
+                    % all
+                    nb_chat=length(dataod.chat);
+                    chat=table();
+                    for j=1:nb_chat
+                        chatadd=table();
+                        chattemp=struct2table(dataod.chat{j,1});
+                        chatadd.time=chattemp.time;
+                        chatadd.type{1,1}=chattemp.type;
+                        chatadd.key=str2double(chattemp.key);
+                        chatadd.slot=chattemp.slot;
+                        chatadd.player_slot=chattemp.player_slot;
+                        chat=[chat;chatadd]; %#ok<AGROW>
+                    end
+                    chat=chat(strcmp(chat.type,'chatwheel')==1,:);
+                    chatplayer=chat(chat.player_slot==playersadd.player_slot,:);
+                    if isempty(chatplayer)
+                        playersadd.nb_chatw=0;
+                        playersadd.nb_ceb=0;
+                    else
+                        playersadd.nb_chatw=height(chatplayer);
+                        % ceb id 230
+                        chatceb=chatplayer(chatplayer.key==230,:);
+                        if isempty(chatceb)
+                            playersadd.nb_ceb=0;
+                        else
+                            playersadd.nb_ceb=height(chatceb);
+                        end
+                    end
+                    %% concat
                     players=[players;playersadd]; %#ok<AGROW>
+                    
+                    
                 end
                 %% verifier si le match exist
                 RQexist2=['select id from public.openplayermatch where openplayermatch.match_id=',num2str(dataod.match_id)];
@@ -465,8 +497,8 @@ try
             end
         else
             disp('Traitement nOK pas de teamfight dans la partie')
-            execmatchadd.execopenplayer=8;
-            execmatchadd.execopenpicks=8;
+            execmatchadd.execopenplayer=0;
+            execmatchadd.execopenpicks=0;
             CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',dataod.match_id,'public','update');
         end
     else
@@ -477,7 +509,7 @@ try
     end
     CBM_PGSQL_inject1l_light(conn,'execmatch',execmatchadd.Properties.VariableNames,execmatchadd,'match_id',dataod.match_id,'public','update');
     disp('Traitement OK')
-catch ME
+catch ME %#ok<NASGU>
     if execmatchadd.execopenpicks<5
         execmatchadd.execopenpicks=execmatchadd.execopenpicks+1;
     end

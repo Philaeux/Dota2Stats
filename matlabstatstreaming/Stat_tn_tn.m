@@ -7,6 +7,7 @@ switch type
         CalcStatTeam=match_valve(match_valve.id_tn==tn_id & match_valve.is_qualif==0,:);
         stat_tn_add=table();
         if ~isempty(match_valve)
+            stat_tn_add.id=NaN;
             stat_tn_add.id_tn=tn_id;
             stat_tn_add.is_qualif=0;
             stat_tn_add.nb_match=height(CalcStatTeam);
@@ -26,6 +27,7 @@ switch type
         CalcStatTeam=match_valve(match_valve.id_tn==tn_id & match_valve.is_qualif==1,:);
         stat_tn_add=table();
         if ~isempty(match_valve)
+            stat_tn_add.id=NaN;
             stat_tn_add.id_tn=tn_id;
             stat_tn_add.is_qualif=1;
             stat_tn_add.nb_match=height(CalcStatTeam);
@@ -45,8 +47,9 @@ switch type
         CalcStatTeam=match_valve(match_valve.id_tn==tn_id,:);
         stat_tn_add=table();
         if ~isempty(match_valve)
+            stat_tn_add.id=NaN;
             stat_tn_add.id_tn=tn_id;
-            stat_tn_add.is_qualif=0;
+            stat_tn_add.is_qualif=NaN;
             stat_tn_add.nb_match=height(CalcStatTeam);
             [stat_tn_add]=genstat(CalcStatTeam,'radiant_win',stat_tn_add);
             [stat_tn_add]=genstat(CalcStatTeam,'duration',stat_tn_add);
