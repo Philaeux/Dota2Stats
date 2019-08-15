@@ -96,8 +96,8 @@ while nolimit==0
             %% liste des match a execopen<5
             rqopen='select match_id,id,execopenplayer,execopenpicks from public.execmatch where execopenplayer<5 or execopenpicks<5';
             newmatchopen=pgsqldata(conn,rqopen);
+            execmatchopen=table();
             if strcmp(newmatchopen,'No Data')==0
-                execmatchopen=table();
                 for j=1:height(newmatchopen)
                     %% Récupération des info match source opendota
                     dataod=ApiGetStatOpen(newmatchopen.match_id(j));
@@ -108,45 +108,31 @@ while nolimit==0
             end
             disp('Traitement Open OK')
             %% algo de fusion
-            nb_match_out_open=height(execmatchopen(execmatchopen.execopenplayer==6,:));
-            if nb_match_out_open>0
-                disp('Start algo fusion tn')
-                tn_with_qualif=tn.withqualif(tn.id_tn==tn_id);
-                tn_qualif_closed=tn.qualifclosed(tn.id_tn==tn_id);
-                if tn_with_qualif==1
-                    if tn_qualif_closed==1
-                        Stat_tn_player(conn,tn_id,'main');
-                        Stat_tn_team(conn,tn_id,'main');
-                        Stat_tn_hero(conn,tn_id,'main');
-                        Stat_tn_hero_team(conn,tn_id,'main');
-                        Stat_tn_player_hero(conn,tn_id,'main');
-                        Stat_tn_tn(conn,tn_id,'main');
-                    else
-                        Stat_tn_player(conn,tn_id,'qualif')
-                        Stat_tn_team(conn,tn_id,'qualif')
-                        Stat_tn_hero(conn,tn_id,'qualif')
-                        Stat_tn_hero_team(conn,tn_id,'qualif')
-                        Stat_tn_player_hero(conn,tn_id,'qualif')
-                        Stat_tn_tn(conn,tn_id,'qualif');
+            if ~isempty(execmatchopen)
+                nb_match_out_open=height(execmatchopen(execmatchopen.execopenplayer==6,:));
+                if nb_match_out_open>0
+                    disp('Start algo fusion tn')
+                    tn_with_qualif=tn.withqualif(tn.id_tn==tn_id);
+                    tn_qualif_closed=tn.qualifclosed(tn.id_tn==tn_id);
+                    if tn_with_qualif==1
+                        if tn_qualif_closed==1
+                            Stat_tn_player(conn,tn_id,'main');
+                            Stat_tn_team(conn,tn_id,'main');
+                            Stat_tn_hero(conn,tn_id,'main');
+                            Stat_tn_hero_team(conn,tn_id,'main');
+                            Stat_tn_player_hero(conn,tn_id,'main');
+                            Stat_tn_tn(conn,tn_id,'main');
+                        else
+                            Stat_tn_player(conn,tn_id,'qualif')
+                            Stat_tn_team(conn,tn_id,'qualif')
+                            Stat_tn_hero(conn,tn_id,'qualif')
+                            Stat_tn_hero_team(conn,tn_id,'qualif')
+                            Stat_tn_player_hero(conn,tn_id,'qualif')
+                            Stat_tn_tn(conn,tn_id,'qualif');
+                        end
                     end
-                    if datetime('now')-date_scan_tn>duration(0,15,0)
-                        Stat_tn_player(conn,tn_id,'all')
-                        Stat_tn_team(conn,tn_id,'all')
-                        Stat_tn_hero(conn,tn_id,'all')
-                        Stat_tn_hero_team(conn,tn_id,'all')
-                        Stat_tn_player_hero(conn,tn_id,'all')
-                        Stat_tn_tn(conn,tn_id,'all');
-                        date_scan_tn=datescan('now');
-                    end
-                else
-                    Stat_tn_player(conn,tn_id,'all')
-                    Stat_tn_team(conn,tn_id,'all')
-                    Stat_tn_hero(conn,tn_id,'all')
-                    Stat_tn_hero_team(conn,tn_id,'all')
-                    Stat_tn_player_hero(conn,tn_id,'all')
-                    Stat_tn_tn(conn,tn_id,'all');
+                    disp('Traitement algo fusion tn OK')
                 end
-                disp('Traitement algo fusion tn OK')
             end
         end %end for tn i
         
@@ -154,6 +140,13 @@ while nolimit==0
         %% boucle stat sur le patch
         if datetime('now')-date_scan_fusion>duration(0,30,0)
             disp('Start algo fusion globaux')
+            Stat_tn_player(conn,tn_id,'all')
+            Stat_tn_team(conn,tn_id,'all')
+            Stat_tn_hero(conn,tn_id,'all')
+            Stat_tn_hero_team(conn,tn_id,'all')
+            Stat_tn_player_hero(conn,tn_id,'all')
+            Stat_tn_tn(conn,tn_id,'all');
+            
             Stat_patch_player(conn)
             Stat_patch_team(conn)
             Stat_patch_hero(conn)

@@ -3,6 +3,7 @@ disp('Traitement des stats TN Player')
 
 %% init player
 player_match_open=pgsqldata(conn,['select * from public.join_stat_tn_player where tn_id=',num2str(tn_id)]);
+player=pgsqldata(conn,'select * from public.dota_pro_players');
 
 switch type
     case 'main'
@@ -135,6 +136,22 @@ switch type
                     StatPlayerAdd.max_hit_value=max(CalcStatPlayer.max_hero_hit_value);
                     x_type=find(max(CalcStatPlayer.max_hero_hit_value));
                     StatPlayerAdd.max_hit_type=CalcStatPlayer.max_hero_hit_type(x_type,1); %#ok<FNDSB>
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_chatw',StatPlayerAdd);
+                    if ismember(list_player(i),player.account_id)
+                        compendiumlvl=player.cmp_lvl(player.account_id==list_player(i));
+                        cebmeter=table();
+                        cebmeter=genstat(CalcStatPlayer,'nb_ceb',cebmeter);
+                        base=round(compendiumlvl/100);
+                        if base<1
+                            StatPlayerAdd.tot_char_ceb=0;
+                        elseif base<2
+                            StatPlayerAdd.tot_char_ceb=5*cebmeter.tot_nb_ceb;
+                        else
+                            StatPlayerAdd.tot_char_ceb=(base*5+3)*cebmeter.tot_nb_ceb;
+                        end
+                    else
+                        StatPlayerAdd.tot_char_ceb=0;
+                    end
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end
@@ -275,6 +292,22 @@ switch type
                     StatPlayerAdd.max_hit_value=max(CalcStatPlayer.max_hero_hit_value);
                     x_type=find(max(CalcStatPlayer.max_hero_hit_value));
                     StatPlayerAdd.max_hit_type=CalcStatPlayer.max_hero_hit_type(x_type,1); %#ok<FNDSB>
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_chatw',StatPlayerAdd);
+                    if ismember(list_player(i),player.account_id)
+                        compendiumlvl=player.cmp_lvl(player.account_id==list_player(i));
+                        cebmeter=table();
+                        cebmeter=genstat(CalcStatPlayer,'nb_ceb',cebmeter);
+                        base=round(compendiumlvl/100);
+                        if base<1
+                            StatPlayerAdd.tot_char_ceb=0;
+                        elseif base<2
+                            StatPlayerAdd.tot_char_ceb=5*cebmeter.tot_nb_ceb;
+                        else
+                            StatPlayerAdd.tot_char_ceb=(base*5+3)*cebmeter.tot_nb_ceb;
+                        end
+                    else
+                        StatPlayerAdd.tot_char_ceb=0;
+                    end
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end
@@ -415,6 +448,22 @@ switch type
                     StatPlayerAdd.max_hit_value=max(CalcStatPlayer.max_hero_hit_value);
                     x_type=find(max(CalcStatPlayer.max_hero_hit_value));
                     StatPlayerAdd.max_hit_type=CalcStatPlayer.max_hero_hit_type(x_type,1); %#ok<FNDSB>
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_chatw',StatPlayerAdd);
+                    if ismember(list_player(i),player.account_id)
+                        compendiumlvl=player.cmp_lvl(player.account_id==list_player(i));
+                        cebmeter=table();
+                        cebmeter=genstat(CalcStatPlayer,'nb_ceb',cebmeter);
+                        base=round(compendiumlvl/100);
+                        if base<1
+                            StatPlayerAdd.tot_char_ceb=0;
+                        elseif base<2
+                            StatPlayerAdd.tot_char_ceb=5*cebmeter.tot_nb_ceb;
+                        else
+                            StatPlayerAdd.tot_char_ceb=(base*5+3)*cebmeter.tot_nb_ceb;
+                        end
+                    else
+                        StatPlayerAdd.tot_char_ceb=0;
+                    end
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end
