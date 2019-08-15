@@ -123,11 +123,11 @@ while nolimit==0
                             Stat_tn_player_hero(conn,tn_id,'main');
                             Stat_tn_tn(conn,tn_id,'main');
                         else
-                            Stat_tn_player(conn,tn_id,'qualif')
-                            Stat_tn_team(conn,tn_id,'qualif')
-                            Stat_tn_hero(conn,tn_id,'qualif')
-                            Stat_tn_hero_team(conn,tn_id,'qualif')
-                            Stat_tn_player_hero(conn,tn_id,'qualif')
+                            Stat_tn_player(conn,tn_id,'qualif');
+                            Stat_tn_team(conn,tn_id,'qualif');
+                            Stat_tn_hero(conn,tn_id,'qualif');
+                            Stat_tn_hero_team(conn,tn_id,'qualif');
+                            Stat_tn_player_hero(conn,tn_id,'qualif');
                             Stat_tn_tn(conn,tn_id,'qualif');
                         end
                     end
