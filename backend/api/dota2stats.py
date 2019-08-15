@@ -91,7 +91,7 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
             self.write(
                 {"success": True, "error": ""}
             )
-        elif request_body["image_type"] == "team_face_off":
+        elif request_body["image_type"] in ["team_face_off", "core_face_off", "support_face_off"]:
             if ("team_id_1" not in request_body
                     or not request_body["team_id_1"].isdigit()
                     or int(request_body["team_id_1"]) <= 0
@@ -100,8 +100,15 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
                     or int(request_body["team_id_2"]) <= 0):
                 self.write({"success": False, "error": "Invalid team_id_x specified"})
                 return
-            await self.image_generator.generate_team_face_off(int(request_body["team_id_1"]),
-                                                              int(request_body["team_id_2"]))
+            if request_body["image_type"] == "team_face_off":
+                await self.image_generator.generate_team_face_off(int(request_body["team_id_1"]),
+                                                                  int(request_body["team_id_2"]))
+            elif request_body["image_type"] == "core_face_off":
+                await self.image_generator.generate_core_face_off(int(request_body["team_id_1"]),
+                                                                  int(request_body["team_id_2"]))
+            elif request_body["image_type"] == "support_face_off":
+                await self.image_generator.generate_support_face_off(int(request_body["team_id_1"]),
+                                                                     int(request_body["team_id_2"]))
             self.write(
                 {"success": True, "error": ""}
             )

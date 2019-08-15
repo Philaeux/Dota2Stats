@@ -131,7 +131,6 @@ class MvpMixin:
 
         # Player
         player_face_path = os.path.join(self.assets_root, "players", str(player_info.account_id) + ".png")
-
         if os.path.exists(player_face_path):
             player_face = Image.open(player_face_path).convert('RGBA')
             player_face_width = int(player_face.size[0] * player_face_height / player_face.size[1])

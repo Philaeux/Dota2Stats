@@ -11,17 +11,19 @@
           <mat-option value="tournament_globals">Tournament Globals</mat-option>
           <mat-option value="team_face_off">Team Face-off</mat-option>
           <mat-option value="mvp">MVP</mat-option>
+          <mat-option value="core_face_off">Core Face-off</mat-option>
+          <mat-option value="support_face_off">Support Face-off</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="padded_field" *ngIf="image_type == 'static_teams' || image_type == 'team_face_off'">
+      <mat-form-field class="padded_field" *ngIf="image_type == 'static_teams' || image_type == 'team_face_off' || image_type == 'core_face_off' || image_type == 'support_face_off'">
         <mat-select placeholder="Team" [(ngModel)]="selected_team" (selectionChange)="rebuild_preview()">
           <mat-option *ngFor="let row of teams" [value]="row[0]">
             {{row[1]}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="padded_field" *ngIf="image_type == 'team_face_off'">
+      <mat-form-field class="padded_field" *ngIf="image_type == 'team_face_off' || image_type == 'core_face_off' || image_type == 'support_face_off'">
         <mat-select placeholder="Team 2" [(ngModel)]="selected_team_2" (selectionChange)="rebuild_preview()">
           <mat-option *ngFor="let row of teams" [value]="row[0]">
             {{row[1]}}
