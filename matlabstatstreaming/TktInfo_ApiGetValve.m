@@ -16,7 +16,11 @@ while testvalve==0
     end
 end
 
+%% ban list
 
+if ~isempty(matchsvalve(matchsvalve.match_id==4968140678,:))
+    matchsvalve(matchsvalve.match_id==4968140678,:)=[];
+end
 
 % teststratz=0;
 % while teststratz==0
