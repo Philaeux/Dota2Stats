@@ -139,7 +139,7 @@ try
                     playersadd.match_id=dataod.match_id;
                     
                     %% gestion des items
-                    list_item=struct2table(dataod.players{1, 1}.item_uses);
+                    list_item=struct2table(dataod.players{i, 1}.item_uses);
                     list_name=list_item.Properties.VariableNames;
                     playersadd.tango=NaN;
                     playersadd.tpscroll=NaN;
@@ -320,6 +320,8 @@ try
                     playersadd.bench_stunspm_pct=dataod.players{i,1}.benchmarks.stuns_per_min.pct;
                     playersadd.bench_lhten_value=dataod.players{i,1}.benchmarks.lhten.raw;
                     playersadd.bench_lhten_pct=dataod.players{i,1}.benchmarks.lhten.pct;
+                    
+                    %% player fun
                     %% chatweel
                     % all
                     nb_chat=length(dataod.chat);
@@ -341,7 +343,7 @@ try
                         playersadd.nb_ceb=0;
                     else
                         playersadd.nb_chatw=height(chatplayer);
-                        % ceb id 230
+                        %% ceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeb id 230
                         chatceb=chatplayer(chatplayer.key==230,:);
                         if isempty(chatceb)
                             playersadd.nb_ceb=0;
@@ -349,6 +351,47 @@ try
                             playersadd.nb_ceb=height(chatceb);
                         end
                     end
+                    %% useless apm
+                    playersadd.apmx1=dataod.players{i,1}.actions.x1;
+                    %% le bergers
+                    nb_moutonitem=playersadd.sheepstick;
+                    nb_moutonrastha=0;
+                    nb_moutonlion=0;
+                    nb_moutonmorph=0;
+                    nb_moutonrubick=0;
+                    if playersadd.hero_id==27
+                        nb_moutonrastha=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                    end
+                    if playersadd.hero_id==26
+                        nb_moutonlion=dataod.players{j,1}.ability_uses.lion_voodoo;
+                    end
+                    if playersadd.hero_id==10
+                        if isfield(dataod.players{j,1}.ability_uses,'lion_voodoo')
+                            nb_moutonmorph1=dataod.players{j,1}.ability_uses.lion_voodoo;
+                        else
+                            nb_moutonmorph1=0;
+                        end
+                        if isfield(dataod.players{j,1}.ability_uses,'shadow_shaman_voodoo')
+                            nb_moutonmorph2=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                        else
+                            nb_moutonmorph2=0;
+                        end
+                        nb_moutonmorph=nb_moutonmorph1+nb_moutonmorph2;
+                    end
+                    if playersadd.hero_id==86
+                        if isfield(dataod.players{j,1}.ability_uses,'lion_voodoo')
+                            nb_moutonrubick1=dataod.players{j,1}.ability_uses.lion_voodoo;
+                        else
+                            nb_moutonrubick1=0;
+                        end
+                        if isfield(dataod.players{j,1}.ability_uses,'shadow_shaman_voodoo')
+                            nb_moutonrubick2=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                        else
+                            nb_moutonrubick2=0;
+                        end
+                        nb_moutonrubick=nb_moutonrubick1+nb_moutonrubick2;
+                    end
+                    playersadd.nb_mouton=nb_moutonrubick
                     %% concat
                     players=[players;playersadd]; %#ok<AGROW>
                     
