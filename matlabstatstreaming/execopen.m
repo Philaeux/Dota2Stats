@@ -391,7 +391,7 @@ try
                         end
                         nb_moutonrubick=nb_moutonrubick1+nb_moutonrubick2;
                     end
-                    playersadd.nb_mouton=nb_moutonrubick
+                    playersadd.nb_mouton=nb_moutonrubick+nb_moutonmorph+nb_moutonlion+nb_moutonrastha+nb_moutonitem;
                     %% concat
                     players=[players;playersadd]; %#ok<AGROW>
                     
