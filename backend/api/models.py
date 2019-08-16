@@ -59,7 +59,7 @@ class DotaProPlayer(DeclarativeBase):
 
 
 class DotaJoinGlobalHeroes(DeclarativeBase):
-    __tablename__ = 'join_global_hero'
+    __tablename__ = 'join_ti9_hero'
 
     hero_id = Column(Integer, primary_key=True)
     short_name = Column(String(255), unique=True)
@@ -71,7 +71,7 @@ class DotaJoinGlobalHeroes(DeclarativeBase):
 
 
 class DotaJoinGlobal(DeclarativeBase):
-    __tablename__= 'join_global'
+    __tablename__= 'join_ti9_global'
 
     nb_match = Column(Numeric(), primary_key=True)
     mean_radiant_win = Column(Numeric())
@@ -79,7 +79,7 @@ class DotaJoinGlobal(DeclarativeBase):
 
 
 class DotaJoinGlobalTeam(DeclarativeBase):
-    __tablename__ = 'join_global_team'
+    __tablename__ = 'join_ti9_team'
 
     team_id = Column(BigInteger, primary_key=True)
     team_name = Column(String(255))
@@ -90,7 +90,7 @@ class DotaJoinGlobalTeam(DeclarativeBase):
 
 
 class DotaJoinGlobalTeamHero(DeclarativeBase):
-    __tablename__ = 'join_global_team_hero'
+    __tablename__ = 'join_ti9_team_hero'
 
     team_id = Column(BigInteger, primary_key=True)
     team_name = Column(String(255))

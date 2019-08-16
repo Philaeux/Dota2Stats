@@ -102,7 +102,7 @@ class TournamentGlobalsMixin:
                 if len(hero_no_pick) == 12:
                     draw_image(composition, hero_image, [75 + i*(hero_width + hero_y_padding), hero_y[0][5+j]], [None, hero_height])
                 else:
-                    draw_text_center_align(image_draw, [75 + i*(hero_width + hero_y_padding) + int(hero_width/2), hero_y[0][5+j]], text='+{0}'.format(len(hero_no_pick)-11), font=rift_title, fill=self.colors['ti_green'])
+                    draw_text_center_align(image_draw, [75 + i*(hero_width + hero_y_padding) + int(hero_width/2), hero_y[0][5+j]], text='+{0}'.format(len(hero_no_pick)-11), font=rift_title, fill=self.colors['ti_purple'])
             else:
                 draw_image(composition, hero_image, [75 + i*(hero_width + hero_y_padding), hero_y[0][5+j]], [None, hero_height])
             i += 1

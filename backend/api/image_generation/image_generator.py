@@ -9,6 +9,7 @@ from image_generation.mixins.static_teams import StaticTeamsMixin
 from image_generation.mixins.group_stage import GroupStageMixin
 from image_generation.mixins.post_game import PostGameMixin
 from image_generation.mixins.tournament_globals import TournamentGlobalsMixin
+from image_generation.mixins.tournament_fun import TournamentFunMixin
 from image_generation.mixins.team_face_off import TeamFaceOffMixin
 from image_generation.mixins.core_face_off import CoreFaceOffMixin
 from image_generation.mixins.support_face_off import SupportFaceOffMixin
@@ -16,7 +17,7 @@ from image_generation.mixins.mvp import MvpMixin
 
 
 class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, TournamentGlobalsMixin, TeamFaceOffMixin,
-                     MvpMixin, CoreFaceOffMixin, SupportFaceOffMixin):
+                     MvpMixin, CoreFaceOffMixin, SupportFaceOffMixin, TournamentFunMixin):
 
     colors = {
         'hero_blue': ImageColor.getrgb('#3375ff'),
@@ -77,6 +78,9 @@ class ImageGenerator(StaticTeamsMixin, GroupStageMixin, PostGameMixin, Tournamen
 
     @staticmethod
     def duration_to_string(duration):
-        duration_sec = math.ceil(duration) % 60
-        duration_min = int(math.ceil(duration - duration_sec) / 60)
+        protected_duration = duration
+        if duration is None:
+            protected_duration = 0
+        duration_sec = math.ceil(protected_duration) % 60
+        duration_min = int(math.ceil(protected_duration - duration_sec) / 60)
         return '{0:02}:{1:02}'.format(duration_min, duration_sec)

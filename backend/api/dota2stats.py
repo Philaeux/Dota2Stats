@@ -86,6 +86,11 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
             self.write(
                 {"success": True, "error": ""}
             )
+        elif request_body["image_type"] == "tournament_fun":
+            await self.image_generator.generate_tournament_fun()
+            self.write(
+                {"success": True, "error": ""}
+            )
         elif request_body["image_type"] == "tournament_globals":
             await self.image_generator.generate_tournament_globals()
             self.write(
