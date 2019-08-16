@@ -9,7 +9,7 @@ while testvalve==0
         pause(1)
         testvalve=1;
     catch
-        disp('api valve indisponible nouvel essai dnas 1 min...')
+        disp('api opendota indisponible nouvel essai dnas 1 min...')
         pause(60)
     end
 end

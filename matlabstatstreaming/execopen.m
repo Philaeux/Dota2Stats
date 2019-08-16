@@ -139,7 +139,7 @@ try
                     playersadd.match_id=dataod.match_id;
                     
                     %% gestion des items
-                    list_item=struct2table(dataod.players{i, 1}.item_uses);
+                    list_item=struct2table(dataod.players{i,1}.item_uses);
                     list_name=list_item.Properties.VariableNames;
                     playersadd.tango=NaN;
                     playersadd.tpscroll=NaN;
@@ -360,38 +360,78 @@ try
                     nb_moutonmorph=0;
                     nb_moutonrubick=0;
                     if playersadd.hero_id==27
-                        nb_moutonrastha=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                        nb_moutonrastha=dataod.players{i,1}.ability_uses.shadow_shaman_voodoo;
                     end
                     if playersadd.hero_id==26
-                        nb_moutonlion=dataod.players{j,1}.ability_uses.lion_voodoo;
+                        nb_moutonlion=dataod.players{i,1}.ability_uses.lion_voodoo;
                     end
                     if playersadd.hero_id==10
-                        if isfield(dataod.players{j,1}.ability_uses,'lion_voodoo')
+                        if isfield(dataod.players{i,1}.ability_uses,'lion_voodoo')
                             nb_moutonmorph1=dataod.players{j,1}.ability_uses.lion_voodoo;
                         else
                             nb_moutonmorph1=0;
                         end
-                        if isfield(dataod.players{j,1}.ability_uses,'shadow_shaman_voodoo')
-                            nb_moutonmorph2=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                        if isfield(dataod.players{i,1}.ability_uses,'shadow_shaman_voodoo')
+                            nb_moutonmorph2=dataod.players{i,1}.ability_uses.shadow_shaman_voodoo;
                         else
                             nb_moutonmorph2=0;
                         end
                         nb_moutonmorph=nb_moutonmorph1+nb_moutonmorph2;
                     end
                     if playersadd.hero_id==86
-                        if isfield(dataod.players{j,1}.ability_uses,'lion_voodoo')
-                            nb_moutonrubick1=dataod.players{j,1}.ability_uses.lion_voodoo;
+                        if isfield(dataod.players{i,1}.ability_uses,'lion_voodoo')
+                            nb_moutonrubick1=dataod.players{i,1}.ability_uses.lion_voodoo;
                         else
                             nb_moutonrubick1=0;
                         end
-                        if isfield(dataod.players{j,1}.ability_uses,'shadow_shaman_voodoo')
-                            nb_moutonrubick2=dataod.players{j,1}.ability_uses.shadow_shaman_voodoo;
+                        if isfield(dataod.players{i,1}.ability_uses,'shadow_shaman_voodoo')
+                            nb_moutonrubick2=dataod.players{i,1}.ability_uses.shadow_shaman_voodoo;
                         else
                             nb_moutonrubick2=0;
                         end
                         nb_moutonrubick=nb_moutonrubick1+nb_moutonrubick2;
                     end
                     playersadd.nb_mouton=nb_moutonrubick+nb_moutonmorph+nb_moutonlion+nb_moutonrastha+nb_moutonitem;
+                    %% permanent buff
+                    playersadd.permanent_buffs=0;
+                    if playersadd.hero_id==74
+                        if isfield(dataod.players{i,1}.permanent_buffs,'stack_count')
+                            permanent_buffs=struct2table(dataod.players{i,1}.permanent_buffs);
+                            if ~isempty(permanent_buffs.stack_count(permanent_buffs.permanent_buff==3))
+                                playersadd.permanent_buffs=permanent_buffs.stack_count(permanent_buffs.permanent_buff==3);
+                            end
+                        end
+                    end
+                    if playersadd.hero_id==93
+                        if isfield(dataod.players{i,1}.permanent_buffs,'stack_count')
+                            permanent_buffs=struct2table(dataod.players{i,1}.permanent_buffs);
+                            if ~isempty(permanent_buffs.stack_count(permanent_buffs.permanent_buff==8))
+                                playersadd.permanent_buffs=permanent_buffs.stack_count(permanent_buffs.permanent_buff==8);
+                            end
+                        end
+                    end
+                    if playersadd.hero_id==14
+                        if isfield(dataod.players{i,1}.permanent_buffs,'stack_count')
+                            permanent_buffs=struct2table(dataod.players{i,1}.permanent_buffs);
+                            if ~isempty(permanent_buffs.stack_count(permanent_buffs.permanent_buff==4))
+                                playersadd.permanent_buffs=permanent_buffs.stack_count(permanent_buffs.permanent_buff==4);
+                            end
+                        end
+                    end
+                    
+                    %% le professeur
+                    if isfield(dataod.players{i,1}.purchase,'tome_of_knowledge')
+                        playeradd.nb_xpbook_buy=dataod.players{i,1}.purchase.tome_of_knowledge;
+                    else
+                        playeradd.nb_xpbook_buy=0;
+                    end
+                    if isfield(dataod.players{i,1}.item_uses,'tome_of_knowledge')
+                        playeradd.nb_xpbook_use=dataod.players{i,1}.item_uses.tome_of_knowledge;
+                    else
+                        playeradd.nb_xpbook_use=0;
+                    end
+                    
+                    playeradd.delta_xpbook=playeradd.nb_xpbook_buy-playeradd.nb_xpbook_use;
                     %% concat
                     players=[players;playersadd]; %#ok<AGROW>
                     
