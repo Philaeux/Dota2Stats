@@ -152,6 +152,14 @@ switch type
                     else
                         StatPlayerAdd.tot_char_ceb=0;
                     end
+                    % traitement fun stat
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'apmx1',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'permanent_buffs',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_mouton',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_buy',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_use',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'delta_xpbook',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'pings',StatPlayerAdd);
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end
@@ -308,6 +316,14 @@ switch type
                     else
                         StatPlayerAdd.tot_char_ceb=0;
                     end
+                    % traitement fun stat
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'apmx1',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'permanent_buffs',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_mouton',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_buy',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_use',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'delta_xpbook',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'pings',StatPlayerAdd);
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end
@@ -464,6 +480,14 @@ switch type
                     else
                         StatPlayerAdd.tot_char_ceb=0;
                     end
+                    % traitement fun stat
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'apmx1',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'permanent_buffs',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_mouton',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_buy',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'nb_xpbook_use',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'delta_xpbook',StatPlayerAdd);
+                    [StatPlayerAdd]=genstat(CalcStatPlayer,'pings',StatPlayerAdd);
                     StatPlayer=[StatPlayer;StatPlayerAdd]; %#ok<AGROW>
                 end
             end

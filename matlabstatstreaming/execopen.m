@@ -421,17 +421,26 @@ try
                     
                     %% le professeur
                     if isfield(dataod.players{i,1}.purchase,'tome_of_knowledge')
-                        playeradd.nb_xpbook_buy=dataod.players{i,1}.purchase.tome_of_knowledge;
+                        playersadd.nb_xpbook_buy=dataod.players{i,1}.purchase.tome_of_knowledge;
                     else
-                        playeradd.nb_xpbook_buy=0;
+                        playersadd.nb_xpbook_buy=0;
                     end
                     if isfield(dataod.players{i,1}.item_uses,'tome_of_knowledge')
-                        playeradd.nb_xpbook_use=dataod.players{i,1}.item_uses.tome_of_knowledge;
+                        playersadd.nb_xpbook_use=dataod.players{i,1}.item_uses.tome_of_knowledge;
                     else
-                        playeradd.nb_xpbook_use=0;
+                        playersadd.nb_xpbook_use=0;
                     end
-                    
-                    playeradd.delta_xpbook=playeradd.nb_xpbook_buy-playeradd.nb_xpbook_use;
+                    playersadd.delta_xpbook=playersadd.nb_xpbook_buy-playersadd.nb_xpbook_use;
+                    %% pinger
+                    if isfield(dataod.players{i,1},'pings')
+                        if ~isempty(dataod.players{i,1}.pings)
+                            playersadd.pings=dataod.players{i,1}.pings;
+                        else
+                            playersadd.pings=0;
+                        end
+                    else
+                        playersadd.pings=0;
+                    end
                     %% concat
                     players=[players;playersadd]; %#ok<AGROW>
                     
