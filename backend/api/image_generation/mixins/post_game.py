@@ -8,7 +8,7 @@ from tornado.gen import multi
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 
 from models import DotaProPlayer, DotaHeroes, DotaItem, DotaProTeam
-from image_generation.helpers import draw_text_outlined_center_align, draw_text_left_align, draw_image, \
+from image_generation.helpers import draw_text_outlined_center_align, draw_text_right_align, draw_image, \
     draw_image_centered
 
 
@@ -160,13 +160,13 @@ class PostGameMixin:
                 if not len(nickname) == len(nickname.encode()):
                     player_name_font = noto_cjk_player_nickname
 
-            draw_text_left_align(image_draw, [hero_x + player_name_x_padding,
-                                              hero_y[player['player_slot']] + player_name_y_padding],
-                                 nickname, player_name_font, fill=self.colors['white'])
-            draw_text_left_align(image_draw, [hero_x + player_name_x_padding,
-                                              hero_y[player[
+            draw_text_right_align(image_draw, [hero_x + player_name_x_padding,
+                                               hero_y[player['player_slot']] + player_name_y_padding],
+                                  nickname, player_name_font, fill=self.colors['white'])
+            draw_text_right_align(image_draw, [hero_x + player_name_x_padding,
+                                               hero_y[player[
                                                   'player_slot']] + player_name_y_padding + player_nickname_y_padding],
-                                 name, rift_player_name, fill=self.colors['white'])
+                                  name, rift_player_name, fill=self.colors['white'])
             kda = "{0}/{1}/{2}".format(player['kills'], player['deaths'], player['assists'])
             image_draw.text([hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x) + int(
                 item_height / 2) + 3 * item_padding,

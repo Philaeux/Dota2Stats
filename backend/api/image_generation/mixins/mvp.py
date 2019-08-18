@@ -8,7 +8,7 @@ from tornado.gen import multi
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 
 from models import DotaProPlayer, DotaHeroes, DotaItem, DotaProTeam
-from image_generation.helpers import draw_text_outlined_center_align, draw_text_left_align, draw_image, \
+from image_generation.helpers import draw_text_outlined_center_align, draw_text_right_align, draw_image, \
     draw_image_centered, draw_image_advanced, draw_alpha_rectangle, draw_image_advanced_left
 
 

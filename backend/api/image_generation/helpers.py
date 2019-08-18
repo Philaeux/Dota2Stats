@@ -22,7 +22,7 @@ def draw_image_centered(composition, image, position, size):
     return Image.alpha_composite(composition, in_plate_image)
 
 
-def draw_text_left_align(draw, position, text, font, fill):
+def draw_text_right_align(draw, position, text, font, fill):
     w, h = draw.textsize(text=text, font=font)
     draw.text([position[0] - w, position[1]], text, font=font, fill=fill)
 

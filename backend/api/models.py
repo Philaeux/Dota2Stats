@@ -101,3 +101,12 @@ class DotaJoinGlobalTeamHero(DeclarativeBase):
     nb_pick = Column(Numeric())
     nb_ban_against = Column(Numeric())
     mean_is_win = Column(Numeric())
+
+
+class DotaJoinGlobalPlayerHero(DeclarativeBase):
+    __tablename__ = 'join_ti9_player_hero'
+
+    hero_id = Column(Integer, primary_key=True)
+    account_id = Column(BigInteger, primary_key=True)
+    short_name = Column(String(255))
+    nb_pick = Column(Numeric())
