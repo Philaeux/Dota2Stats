@@ -54,6 +54,11 @@ def draw_text_outlined_center_align(draw, position, text, font, fill, outline_fi
     draw.text([new_x, position[1]], text, font=font, fill=fill)
 
 
+def draw_text_outlined_right_align(draw, position, text, font, fill, outline_fill, outline_width):
+    w, h = draw.textsize(text=text, font=font)
+    draw_text_outlined(draw, [position[0]-w, position[1]], text, font, fill, outline_fill, outline_width)
+
+
 def draw_alpha_rectangle(composition, positions, fill, alpha):
     in_place_rectangle = Image.new('RGBA', (composition.size[0], composition.size[1]))
     image_draw = ImageDraw.Draw(in_place_rectangle)

@@ -103,6 +103,26 @@ class DotaJoinGlobalTeamHero(DeclarativeBase):
     mean_is_win = Column(Numeric())
 
 
+class DotaJoinGlobalPlayer(DeclarativeBase):
+    __tablename__ = 'join_ti9_player'
+
+    account_id = Column(BigInteger, primary_key=True)
+    team_id = Column(BigInteger)
+    nickname = Column(String(255), nullable=False, default="")
+    position = Column(Integer, nullable=False, default=0)
+    mean_kda = Column(Numeric())
+    mean_gold = Column(Numeric())
+    mean_gold_spent = Column(Numeric())
+    mean_lane_effi_pct = Column(Numeric())
+    mean_teamfight_part = Column(Numeric())
+    mean_stun = Column(Numeric())
+    mean_camps_stacked = Column(Numeric())
+    mean_bounty_pickups = Column(Numeric())
+    mean_purchased_obs = Column(Numeric())
+    mean_purchased_sen = Column(Numeric())
+    mean_is_roaming = Column(Numeric())
+
+
 class DotaJoinGlobalPlayerHero(DeclarativeBase):
     __tablename__ = 'join_ti9_player_hero'
 
@@ -110,3 +130,4 @@ class DotaJoinGlobalPlayerHero(DeclarativeBase):
     account_id = Column(BigInteger, primary_key=True)
     short_name = Column(String(255))
     nb_pick = Column(Numeric())
+    nb_win = Column(Numeric())

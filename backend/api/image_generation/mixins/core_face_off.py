@@ -1,20 +1,18 @@
-import decimal
 import os
-import types
-import time
 from PIL import Image, ImageDraw, ImageFont
 from tornado_sqlalchemy import as_future
 from tornado.gen import multi
 from sqlalchemy import desc
 
-from image_generation.helpers import draw_image, draw_image_advanced, draw_text_center_align, draw_alpha_rectangle, \
-    draw_text_right_align
-from models import DotaProPlayer, DotaProTeam, DotaJoinGlobalPlayerHero
+from image_generation.helpers import draw_image_advanced, draw_text_center_align, draw_alpha_rectangle, \
+    draw_text_right_align, draw_text_outlined, draw_text_outlined_right_align
+from models import DotaJoinGlobalPlayer, DotaProTeam, DotaJoinGlobalPlayerHero
 
 
 class CoreFaceOffMixin:
 
     async def generate_core_face_off(self, team_1, team_2):
+
         # Delete previous image
         generated_path = os.path.join(self.generated_root, "core_face_off-" + str(team_1) + "-" + str(team_2) + ".png")
         if os.path.exists(generated_path):
@@ -27,10 +25,10 @@ class CoreFaceOffMixin:
             os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_bold_italic.otf'), 46)
         noto_cjk_player_nickname = ImageFont.truetype(
             os.path.join(self.assets_root, 'fonts', 'noto', 'noto_sans_cjk_bold.otf'), 38)
-        rift_middle = ImageFont.truetype(
-            os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_bold.otf'), 48)
-        rift_text = ImageFont.truetype(
-            os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_regular.otf'), 50)
+        hero_count = ImageFont.truetype(
+            os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_bold.otf'), 36)
+        rift_stat = ImageFont.truetype(
+            os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_bold.otf'), 56)
 
         composition = Image.open(os.path.join(self.assets_root, 'background3.png')).convert('RGBA')
         image_draw = ImageDraw.Draw(composition)
@@ -40,34 +38,50 @@ class CoreFaceOffMixin:
             as_future(self.session.query(DotaProTeam).filter(DotaProTeam.id == team_1).one_or_none),
             as_future(self.session.query(DotaProTeam).filter(DotaProTeam.id == team_2).one_or_none)
         ])
-        players = await multi([
-            as_future(self.session.query(DotaProPlayer)
-                      .filter(DotaProPlayer.team_id == team_1,
-                              DotaProPlayer.position <= 3)
-                      .order_by(DotaProPlayer.position)
-                      .limit(3).all),
-            as_future(self.session.query(DotaProPlayer)
-                      .filter(DotaProPlayer.team_id == team_2,
-                              DotaProPlayer.position <= 3)
-                      .order_by(DotaProPlayer.position)
-                      .limit(3).all)
+        all_players = await multi([
+            as_future(self.session.query(DotaJoinGlobalPlayer)
+                      .filter(DotaJoinGlobalPlayer.team_id == team_1)
+                      .order_by(DotaJoinGlobalPlayer.position)
+                      .limit(5).all),
+            as_future(self.session.query(DotaJoinGlobalPlayer)
+                      .filter(DotaJoinGlobalPlayer.team_id == team_2)
+                      .order_by(DotaJoinGlobalPlayer.position)
+                      .limit(5).all)
         ])
+        players = [all_players[0][0:3], all_players[1][0:3]]
+        total_gold = [0, 0]
 
         draw_text_center_align(image_draw, [480, 30], '{0}'.format(teams[0].name), font=rift_title,
                                fill=self.colors['ti_purple'])
         draw_text_center_align(image_draw, [1440, 30], '{0}'.format(teams[1].name), font=rift_title,
                                fill=self.colors['ti_purple'])
 
-        # Player
+        # Drawing tweaks
+        center_line_padding = 15
         player_face_height = 200
         border_width = 5
         hero_height = int((player_face_height + 2 * border_width) / 3)
-        row_start = [350, 650, 950]
+        hero_width = int(256 * hero_height / 144)
+        row_start = [300, 600, 900]
         image_center_x = 960
         player_face_center_x = 800
         nickname_padding = 35
+        icon_size = 80
+        nb_pick_padding_x = 7
+        nb_pick_padding_y = -15
 
+        # Draw lines
+        image_draw.line(xy=[960, row_start[0] + icon_size + center_line_padding,
+                            960, row_start[1] - icon_size - center_line_padding],
+                        width=5, fill=self.colors["white"])
+        image_draw.line(xy=[960, row_start[1] + icon_size + center_line_padding,
+                            960, row_start[2] - icon_size - center_line_padding],
+                        width=5, fill=self.colors["white"])
+
+        # Player
         for i in range(0, 2):
+            for j, player in enumerate(all_players[i]):
+                total_gold[i] += player.mean_gold + player.mean_gold_spent
             for j in range(0, len(players[i])):
                 player = players[i][j]
 
@@ -77,17 +91,98 @@ class CoreFaceOffMixin:
                         .order_by(desc(DotaJoinGlobalPlayerHero.nb_pick))
                         .limit(3).all)
 
+                # Heroes
                 for index, hero in enumerate(player_heroes):
-                    print(hero)
                     hero_path = os.path.join(self.assets_root, "dota", "hero_rectangle", hero.short_name + ".png")
                     if os.path.exists(hero_path):
                         hero_image = Image.open(hero_path).convert('RGBA')
                         composition = draw_image_advanced(composition, hero_image,
-                                                          [image_center_x + pow(-1, i+1)*(player_face_center_x - player_face_height - int(hero_height/2)),
+                                                          [image_center_x + pow(-1, i+1)*(player_face_center_x - player_face_height + int(hero_height/2) - int(border_width/2)),
                                                            row_start[j] + index*hero_height - int(player_face_height/2) + int(hero_height/2) - border_width],
                                                           [None, hero_height],
                                                           1)
+                image_draw = ImageDraw.Draw(composition)
+                for index, hero in enumerate(player_heroes):
+                    position = [image_center_x + pow(-1, i+1) * (player_face_center_x - int(player_face_height/2) - border_width - hero_width) + nb_pick_padding_x - (1-i)*hero_width,
+                                row_start[j] + index * hero_height - int(player_face_height / 2) + int(hero_height / 2) + nb_pick_padding_y]
+                    draw_text_outlined(image_draw,
+                                       position=position,
+                                       text="{:.0f}".format(hero.nb_pick),
+                                       font=hero_count,
+                                       fill=self.colors['white'],
+                                       outline_fill=self.colors['black'],
+                                       outline_width=3)
+                    draw_text_outlined_right_align(image_draw,
+                                                   position=[position[0] + hero_width - 2 * nb_pick_padding_x,
+                                                             position[1]],
+                                                   text="{:.0f}".format(hero.nb_win),
+                                                   font=hero_count,
+                                                   fill=self.colors['ti_green'],
+                                                   outline_fill=self.colors['black'],
+                                                   outline_width=3)
 
+                # Stats
+                icon_padding_x = 500
+                if i == 0:
+                    skull_image = Image.open(os.path.join(self.assets_root, 'icons', 'skull.png')).convert('RGBA')
+                    composition = draw_image_advanced(composition, skull_image,
+                                                      [image_center_x, row_start[j] - int(icon_size/2)],
+                                                      [None, icon_size],
+                                                      1)
+                    gold_icon = Image.open(os.path.join(self.assets_root, 'icons', 'gold.png')).convert('RGBA')
+                    composition = draw_image_advanced(composition, gold_icon,
+                                                      [image_center_x, row_start[j]+int(icon_size/2)],
+                                                      [None, icon_size],
+                                                      1)
+                fight_icon = Image.open(os.path.join(self.assets_root, 'icons', 'fight.png')).convert('RGBA')
+                composition = draw_image_advanced(composition, fight_icon,
+                                                  [image_center_x + pow(-1, i+1) * icon_padding_x, row_start[j]-int(icon_size/2)],
+                                                  [None, icon_size],
+                                                  1)
+                if player.position in [1, 2]:
+                    efficiency_icon = Image.open(os.path.join(self.assets_root, 'icons', 'efficiency.png')).convert('RGBA')
+                    composition = draw_image_advanced(composition, efficiency_icon,
+                                                      [image_center_x - pow(-1, i+1) * icon_padding_x, row_start[j]+int(icon_size/2)],
+                                                      [None, icon_size],
+                                                      1)
+                else:
+                    stun_icon = Image.open(os.path.join(self.assets_root, 'icons', 'stun.png')).convert('RGBA')
+                    composition = draw_image_advanced(composition, stun_icon,
+                                                      [image_center_x - pow(-1, i+1) * icon_padding_x, row_start[j]+int(icon_size/2)],
+                                                      [None, icon_size],
+                                                      1)
+
+                stat_padding_y = [-35-int(icon_size/2), -35+int(icon_size/2)]
+                image_draw = ImageDraw.Draw(composition)
+                position = [image_center_x + pow(-1, i+1) * icon_size,
+                            row_start[j]]
+                mean_kda, mean_efficiency, mean_gold, mean_fight, mean_stun = 0.0, 0.0, 0.0, 0.0, 0.0
+                if player.mean_kda is not None: mean_kda = player.mean_kda
+                if player.mean_lane_effi_pct is not None: mean_efficiency = player.mean_lane_effi_pct
+                if player.mean_gold is not None and player.mean_gold_spent is not None:
+                    mean_gold = (player.mean_gold + player.mean_gold_spent)*100/total_gold[i]
+                if player.mean_teamfight_part is not None: mean_fight = player.mean_teamfight_part*100
+                if player.mean_stun is not None: mean_stun = player.mean_stun
+                mean_kda_str = "{:.2f}".format(mean_kda)
+                mean_gold_str = "{:.1f} %".format(mean_gold)
+                mean_fight_str = "{:.1f} %".format(mean_fight)
+                if player.position in [1,2]:
+                    mean_efficiency_stun_str = "{:.1f} %".format(mean_efficiency)
+                else:
+                    mean_efficiency_stun_str = '{:.0f} "'.format(mean_stun)
+
+                if i == 1:
+                    image_draw.text([position[0], position[1] + stat_padding_y[0]], mean_kda_str, font=rift_stat, fill=self.colors["white"])
+                    image_draw.text([position[0], position[1] + stat_padding_y[1]], mean_gold_str, font=rift_stat, fill=self.colors["white"])
+                    draw_text_right_align(image_draw, [position[0]+icon_padding_x - 2*icon_size, position[1] + stat_padding_y[0]], mean_fight_str, font=rift_stat, fill=self.colors["white"])
+                    draw_text_right_align(image_draw, [position[0]+icon_padding_x - 2*icon_size, position[1] + stat_padding_y[1]], mean_efficiency_stun_str, font=rift_stat, fill=self.colors["white"])
+                else:
+                    draw_text_right_align(image_draw, [position[0], position[1] + stat_padding_y[0]], mean_kda_str, font=rift_stat, fill=self.colors["white"])
+                    draw_text_right_align(image_draw, [position[0], position[1] + stat_padding_y[1]], mean_gold_str, font=rift_stat, fill=self.colors["white"])
+                    image_draw.text([position[0]-icon_padding_x + 2*icon_size, position[1] + stat_padding_y[0]], mean_fight_str, font=rift_stat, fill=self.colors["white"])
+                    image_draw.text([position[0]-icon_padding_x + 2*icon_size, position[1] + stat_padding_y[1]], mean_efficiency_stun_str, font=rift_stat, fill=self.colors["white"])
+
+                # Names
                 image_draw = ImageDraw.Draw(composition)
                 player_name_font = rift_player_nickname
                 if not len(player.nickname) == len(player.nickname.encode()):
@@ -107,6 +202,7 @@ class CoreFaceOffMixin:
                                     font=player_name_font,
                                     fill=self.colors['white'])
 
+                # Face
                 player_face_path = os.path.join(self.assets_root, "players", str(player.account_id) + ".png")
                 if os.path.exists(player_face_path):
                     player_face = Image.open(player_face_path).convert('RGBA')
