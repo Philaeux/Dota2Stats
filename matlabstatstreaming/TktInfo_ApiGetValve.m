@@ -21,6 +21,9 @@ end
 if ~isempty(matchsvalve(matchsvalve.match_id==4968140678,:))
     matchsvalve(matchsvalve.match_id==4968140678,:)=[];
 end
+if ~isempty(matchsvalve(matchsvalve.match_id==4982304736,:))
+    matchsvalve(matchsvalve.match_id==4982304736,:)=[];
+end
 
 % teststratz=0;
 % while teststratz==0

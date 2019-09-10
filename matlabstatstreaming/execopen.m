@@ -15,7 +15,7 @@ try
     execmatchadd.execopenpicks=execmatch.execopenpicks(execmatch.match_id==dataod.match_id);
     execmatchadd.execopenplayer=execmatch.execopenplayer(execmatch.match_id==dataod.match_id);
     if dataod.game_mode==2
-        if isempty(dataod.teamfights)==0
+        if isempty(dataod.version)==0
             if execmatchadd.execopenplayer<5
                 for i=1:10
                     %% player info
