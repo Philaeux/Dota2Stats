@@ -353,6 +353,13 @@ try
                     end
                     %% useless apm
                     playersadd.apmx1=dataod.players{i,1}.actions.x1;
+                    playersadd.apmx2=dataod.players{i,1}.actions.x2;
+                    playersadd.apmx3=dataod.players{i,1}.actions.x3;
+                    playersadd.apmx4=dataod.players{i,1}.actions.x4;
+                    playersadd.apmx5=dataod.players{i,1}.actions.x5;
+                    playersadd.apmx6=dataod.players{i,1}.actions.x6;
+                    playersadd.apmx8=dataod.players{i,1}.actions.x8;
+                    playersadd.apmx10=dataod.players{i,1}.actions.x10;
                     %% le bergers
                     nb_moutonitem=playersadd.sheepstick;
                     nb_moutonrastha=0;

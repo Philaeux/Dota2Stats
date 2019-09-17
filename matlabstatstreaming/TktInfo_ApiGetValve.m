@@ -7,8 +7,12 @@ while testvalve==0
         RQString=['http://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=FB3E80CED3B660BF4A064B030E3F424F&league_id=',id_tn_rq];
         options = weboptions('Timeout',60);
         data=webread(RQString,options);
+        if ~isempty(data.result.matches)
         matchsvalve=table([data.result.matches.series_id].', [data.result.matches.match_id].', [data.result.matches.start_time].', [data.result.matches.radiant_team_id].',...
             [data.result.matches.dire_team_id].', 'VariableNames', {'series_id', 'match_id', 'start_time', 'radiant_team_id', 'dire_team_id'});
+        else
+            matchsvalve=table();
+        end
         testvalve=1;
     catch
         disp('api valve indisponible nouvel essai dnas 1 min...')
