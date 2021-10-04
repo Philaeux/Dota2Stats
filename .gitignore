@@ -2,7 +2,6 @@
 
 
 backend/.venv
-backend/api/settings.cfg
 backend/api/assets/generated/*.png
 backend/api/assets/generated/*.json
 backend/api/__pycache__
