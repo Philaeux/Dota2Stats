@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  baseAPI: 'http://192.168.0.37:9899',
-  baseWS: 'ws://192.168.0.37:9899',
-  baseWeb: 'http://192.168.0.37:4200'
+  baseAPI: 'http://127.0.0.1:9899',
+  baseWS: 'ws://127.0.0.1:9899',
+  baseWeb: 'http://127.0.0.1:4200'
 };
 
 /*

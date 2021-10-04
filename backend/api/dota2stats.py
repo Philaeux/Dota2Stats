@@ -5,23 +5,17 @@ import urllib
 from tornado.web import Application, RequestHandler
 from tornado.websocket import WebSocketHandler
 from tornado.options import define, options, parse_config_file
-from tornado_sqlalchemy import as_future, make_session_factory, SessionMixin
+from tornado_sqlalchemy import as_future, SQLAlchemy, SessionMixin
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 from image_generation.image_generator import ImageGenerator
-from models import DotaHeroes, GroupStage, DotaProTeam
+from models import GroupStage, DotaProTeam
 
 
 define('database_url', type=str, help='Database URL')
 settings_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "settings.cfg")
 parse_config_file(settings_file)
-
-
-class NativeCoroutinesRequestHandler(SessionMixin, RequestHandler):
-    async def get(self):
-        count = await as_future(self.session.query(DotaHeroes).count)
-        self.write('{} heroes so far!'.format(count))
 
 
 class ImageRequestHandler(RequestHandler):
@@ -252,7 +246,7 @@ def make_app(database_url):
         (r"/api/scene", SceneHandler)
     ]
     return Application(urls,
-                       session_factory=make_session_factory(database_url, pool_size=100, max_overflow=200),
+                       db=SQLAlchemy(database_url, engine_options= {"connect_args": {'check_same_thread': False}}),
                        debug=True)
 
 

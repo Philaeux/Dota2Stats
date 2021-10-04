@@ -25,24 +25,24 @@ class GroupStageMixin:
         rift_bold_sub = ImageFont.truetype(
             os.path.join(self.assets_root, 'fonts', 'rift', 'fort_foundry_rift_bold.otf'), 58)
         logo_array = {
+            5: {'offset': [75, 45], 'size': [None, 75], 'suffix': ''},
             15: {'offset': [75, 45], 'size': [None, 75], 'suffix': '-horiz'},
-            36: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             39: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
-            2163: {'offset': [75, 45], 'size': [None, 85], 'suffix': '-solid'},
             111474: {'offset': [75, 45], 'size': [None, 75], 'suffix': ''},
             350190: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
-            543897: {'offset': [75, 45], 'size': [None, 75], 'suffix': ''},
             726228: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             1838315: {'offset': [75, 45], 'size': [None, 55], 'suffix': '-silver'},
             1883502: {'offset': [75, 45], 'size': [None, 65], 'suffix': '-ti9'},
-            2108395: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
             2586976: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
-            2626685: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
-            2672298: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
-            6209804: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
-            6214538: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
-            6214973: {'offset': [75, 45], 'size': [None, 65], 'suffix': ''},
-            7203342: {'offset': [75, 45], 'size': [None, 72], 'suffix': ''},
+            6209166: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            7119388: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            7390454: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            7391077: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            8204512: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            8214850: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            8254400: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            8255756: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''},
+            8260983: {'offset': [75, 45], 'size': [None, 70], 'suffix': ''}
         }
 
         draw_text_outlined_center_align(image_draw, [480, 45], 'Groupe A', font=rift_bold_title,
