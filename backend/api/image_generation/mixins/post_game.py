@@ -118,12 +118,33 @@ class PostGameMixin:
                                [hero_x + hero_width + (i + 1) * item_padding + i * item_width,
                                 hero_y[player['player_slot']] + j * (item_height + item_padding)],
                                [None, item_height])
+
+            # Draw neutral item
+            if player["item_neutral"] != 0:
+                item = next((item for item in items if item.id == player["item_neutral"]), None)
+                if item is None:
+                    short_name = 'error'
+                else:
+                    short_name = item.name
+                item_path = os.path.join(self.assets_root, 'dota', 'item_rectangle', short_name + '.png')
+                if not os.path.exists(item_path):
+                    item_path = os.path.join(self.assets_root, 'dota', 'item_rectangle', 'default.png')
+                item_image = Image.open(item_path).convert('RGBA')
+            else:
+                item_image = Image.open(os.path.join(self.assets_root, 'dota', 'item_rectangle', 'empty.png')) \
+                    .convert('RGBA')
+            draw_image(composition,
+                       item_image,
+                       [hero_x  + hero_width + 5*item_padding + 3*item_width,
+                        hero_y[player['player_slot']] + int((item_height + item_padding)/2)],
+                       [None, item_height])
+
             # Draw icons
             sword_image = Image.open(os.path.join(self.assets_root, 'icons', 'sword.png')).convert('RGBA')
             sword_image = sword_image.resize([int(item_height / 2), int(item_height / 2)], Image.LANCZOS)
             in_place_sword = Image.new('RGBA', (composition.size[0], composition.size[1]))
             in_place_sword.paste(sword_image,
-                                 box=[hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x),
+                                 box=[hero_x + hero_width + 4 * (item_width + item_padding + kda_padding_x),
                                       hero_y[player['player_slot']] + item_height + 15],
                                  mask=sword_image)
             composition = Image.alpha_composite(composition, in_place_sword)
@@ -133,7 +154,7 @@ class PostGameMixin:
             skull_image = skull_image.resize([int(item_height / 2), int(item_height / 2)], Image.LANCZOS)
             in_place_skull = Image.new('RGBA', (composition.size[0], composition.size[1]))
             in_place_skull.paste(skull_image,
-                                 box=[hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x),
+                                 box=[hero_x + hero_width + 4 * (item_width + item_padding + kda_padding_x),
                                       hero_y[player['player_slot']] + 12],
                                  mask=skull_image)
             composition = Image.alpha_composite(composition, in_place_skull)
@@ -168,11 +189,11 @@ class PostGameMixin:
                                                   'player_slot']] + player_name_y_padding + player_nickname_y_padding],
                                   name, rift_player_name, fill=self.colors['white'])
             kda = "{0}/{1}/{2}".format(player['kills'], player['deaths'], player['assists'])
-            image_draw.text([hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x) + int(
+            image_draw.text([hero_x + hero_width + 4 * (item_width + item_padding + kda_padding_x) + int(
                 item_height / 2) + 3 * item_padding,
                              hero_y[player['player_slot']]],
                             text=kda, font=rift_kda, fill=self.colors['white'])
-            image_draw.text([hero_x + hero_width + 3 * (item_width + item_padding + kda_padding_x) + int(
+            image_draw.text([hero_x + hero_width + 4 * (item_width + item_padding + kda_padding_x) + int(
                 item_height / 2) + 3 * item_padding,
                              hero_y[player['player_slot']] + item_height + item_padding],
                             text=str(player['hero_damage']), font=rift_dmg, fill=self.colors['white'])
@@ -180,8 +201,8 @@ class PostGameMixin:
         # Draw graph
         radiant_gold_adv = game_json['radiant_gold_adv']
         radiant_xp_adv = game_json['radiant_xp_adv']
-        graph_start_x = 875
-        graph_end_x = 1800
+        graph_start_x = 910
+        graph_end_x = 1850
         graph_y = 400
         graph_width = 4
         graph_graduation_x = 10
