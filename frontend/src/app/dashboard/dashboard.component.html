@@ -8,6 +8,7 @@
           <mat-option value="static_teams">Static Teams</mat-option>
           <mat-option value="group_stage">Group Stage</mat-option>
           <mat-option value="post_game">Post Game</mat-option>
+          <mat-option value="post_game_v2">Post Game V2</mat-option>
           <!--mat-option value="tournament_globals">Tournament Globals</mat-option>
           <mat-option value="tournament_fun">Tournament Fun</mat-option>
           <mat-option value="team_face_off">Team Face-off</mat-option>
@@ -32,7 +33,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="padded_field" *ngIf="image_type == 'post_game' || image_type == 'mvp'">
+      <mat-form-field class="padded_field" *ngIf="image_type == 'post_game' || image_type == 'post_game_v2' || image_type == 'mvp'">
         <input matInput placeholder="Match Id" [(ngModel)]="game_id" (change)="rebuild_preview()">
       </mat-form-field>
 
@@ -69,12 +70,12 @@
 
   <div class="group-stage-component mat-elevation-z1">
     <div class="scene-controls">
-      <mat-select placeholder="Team" class="input-selection" [(ngModel)]="group_stage_team">
+      <!--mat-select placeholder="Team" class="input-selection" [(ngModel)]="group_stage_team">
         <mat-option *ngFor="let row of teams" [value]="row[0]">
           {{row[1]}}
         </mat-option>
       </mat-select>
-      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="insert_team()">Insert</button>
+      <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="insert_team()">Insert</button-->
       <button mat-button color="primary" class="control-separator mat-elevation-z1" (click)="refresh_group_stage()">Refresh</button>
     </div>
 
@@ -136,9 +137,9 @@
             <button mat-icon-button (click)="update_group_team(element)">
               <mat-icon>save</mat-icon>
             </button>
-            <button mat-icon-button (click)="delete_group_team(element.id)">
+            <!--button mat-icon-button (click)="delete_group_team(element.id)">
               <mat-icon>delete</mat-icon>
-            </button>
+            </button-->
           </td>
         </ng-container>
 

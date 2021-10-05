@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
         image_name += this.image_type;
         break;
       case 'post_game':
+      case 'post_game_v2':
         image_name += this.image_type + '-' + this.game_id;
         break;
       case 'team_face_off':
@@ -86,6 +87,7 @@ export class DashboardComponent implements OnInit {
         payload["team_id"] = this.selected_team;
         break;
       case "post_game":
+      case "post_game_v2":
         payload["game_id"] = this.game_id;
         break;
       case "team_face_off":

@@ -80,6 +80,16 @@ class ImageGeneratorRequestHandler(CROSRequestHandler, SessionMixin):
             self.write(
                 {"success": True, "error": ""}
             )
+        elif request_body["image_type"] == "post_game_v2":
+            if ('game_id' not in request_body
+                    or not request_body["game_id"].isdigit()
+                    or int(request_body["game_id"]) <= 0):
+                self.write({"success": False, "error": "Invalid game id specified"})
+                return
+            await self.image_generator.generate_post_game_v2(int(request_body["game_id"]))
+            self.write(
+                {"success": True, "error": ""}
+            )
         elif request_body["image_type"] == "tournament_fun":
             await self.image_generator.generate_tournament_fun()
             self.write(

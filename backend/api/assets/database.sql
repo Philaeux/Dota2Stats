@@ -1,3 +1,4 @@
+DROP TABLE dota_heroes;
 CREATE TABLE IF NOT EXISTS dota_heroes(
     id int PRIMARY KEY,
     name varchar(255) UNIQUE,
@@ -121,8 +122,13 @@ INSERT INTO dota_heroes(id, name, short_name, display_name) VALUES
     (119, 'npc_dota_hero_dark_willow', 'dark_willow', 'Dark Willow'),
     (120, 'npc_dota_hero_pangolier', 'pangolier', 'Pangolier'),
     (121, 'npc_dota_hero_grimstroke', 'grimstroke', 'Grimstroke'),
-    (129, 'npc_dota_hero_mars', 'mars', 'Mars');
+    (123, 'npc_dota_hero_hoodwink', 'hoodwing', 'Hoodwink'),
+    (126, 'npc_dota_hero_void_spirit', 'void_spirit', 'Void Spirit'),
+    (128, 'npc_dota_hero_snapfire', 'snapfire', 'Snapfire'),
+    (129, 'npc_dota_hero_mars', 'mars', 'Mars'),
+    (135, 'npc_dota_hero_dawnbreaker', 'dawnbreaker', 'Dawnbreaker');
 
+DROP TABLE dota_items;
 CREATE TABLE IF NOT EXISTS dota_items(
     id int PRIMARY KEY,
     name varchar(255) UNIQUE,
@@ -404,30 +410,41 @@ INSERT INTO dota_items(id, name, short_name, display_name) VALUES
     (277, 'item_yasha_and_kaya', 'yasha_and_kaya', 'Yasha and Kaya'),
     (279, 'item_ring_of_tarrasque', 'ring_of_tarrasque', 'Ring of Tarrasque');
 
+DROP TABLE dota_pro_teams;
 CREATE TABLE IF NOT EXISTS dota_pro_teams(
     id bigint PRIMARY KEY,
-    name varchar(255) UNIQUE
+    name varchar(255) UNIQUE,
+    ti boolean
 );
-
-INSERT INTO dota_pro_teams(id, name) VALUES
-    (15, 'PSG.LGD'),
-    (36, 'Natus Vincere'),
-    (39, 'Evil Geniuses'),
-    (2163, 'Team Liquid'),
-    (111474, 'Alliance'),
-    (350190, 'Fnatic'),
-    (543897, 'Mineski'),
-    (726228, 'Vici Gaming'),
-    (1838315, 'Team Secret'),
-    (1883502, 'Virtus Pro'),
-    (2108395, 'TNC Predator'),
-    (2586976, 'OG'),
-    (2626685, 'Keen Gaming'),
-    (2672298, 'Infamous'),
-    (6209804, 'Royal Never Give Up'),
-    (6214538, 'Newbee'),
-    (6214973, 'Ninjas in Pyjamas'),
-    (6666989, 'Chaos Esports Club');
+INSERT INTO dota_pro_teams(id, name, ti) VALUES
+    (5, 'Invictus Gaming', TRUE),
+    (15, 'PSG.LGD', TRUE),
+    (36, 'Natus Vincere', FALSE),
+    (39, 'Evil Geniuses', TRUE),
+    (2163, 'Team Liquid', FALSE),
+    (111474, 'Alliance', TRUE),
+    (350190, 'Fnatic', TRUE),
+    (543897, 'Mineski', FALSE),
+    (726228, 'Vici Gaming', TRUE),
+    (1838315, 'Team Secret', TRUE),
+    (1883502, 'Virtus.Pro', TRUE),
+    (2108395, 'TNC Predator', FALSE),
+    (2586976, 'OG', TRUE),
+    (2626685, 'Keen Gaming', FALSE),
+    (2672298, 'Infamous', FALSE),
+    (6209166, 'Team Aster', TRUE),
+    (6209804, 'Royal Never Give Up', FALSE),
+    (6214538, 'Newbee', FALSE),
+    (6214973, 'Ninjas in Pyjamas', FALSE),
+    (6666989, 'Chaos Esports Club',  FALSE),
+    (7119388, 'Team Spirit',  TRUE),
+    (7390454, 'Quincy Crew',  TRUE),
+    (7391077, 'Thunder Predator',  TRUE),
+    (8204512, 'Elephant',  TRUE),
+    (8214850, 'T1',  TRUE),
+    (8254400, 'beastcoast',  TRUE),
+    (8255756, 'SG esports',  TRUE),
+    (8260983, 'Undying', TRUE);
 
 CREATE TABLE IF NOT EXISTS dota_pro_players(
     account_id bigint PRIMARY KEY,
@@ -442,86 +459,103 @@ INSERT INTO dota_pro_players(account_id, team_id, nickname, name, position) VALU
     (94738847, 15, 'Chalice', 'Yang Shenyi', 3),
     (101695162, 15, 'fy', 'Xu Linsen', 4),
     (94296097, 15, 'xNova', 'Yap Jian Wei', 5),
+
     (114619230, 36, 'Crystallize', 'Vladislav Krystanek', 1),
     (171981096, 36, 'MagicaL', 'Idan Vardanian', 2),
     (234699894, 36, 'Blizzy', 'Evgeniy Ree', 3),
     (111030315, 36, 'Zayac', 'Bakyt Emilzhanov', 4),
     (117421467, 36, 'SoNNeikO', 'Akbar Butaev', 5),
+
     (86745912, 39, 'Arteezy', 'Artour Babaev', 1),
     (111620041, 39, 'SumaiL', 'Syed Sumail Hassan', 2),
     (41231571, 39, 's4', 'Gustav Magnusson', 3),
     (25907144, 39, 'Cr1t-', 'Andreas Nielsen', 4),
     (94155156, 39, 'Fly', 'Tal Aizik', 5),
+
     (105248644, 2163, 'Miracle-', 'Amer Al-Barkawi', 1),
     (86700461, 2163, 'w33', 'Aliwi Omar', 2),
     (34505203, 2163, 'MinD_ContRoL', 'Ivan Ivanov', 3),
     (101356886, 2163, 'GH', 'Maroun Merhej', 4),
     (82262664, 2163, 'KuroKy', 'Kuro Salehi Takhasomi', 5),
+
     (152962063, 111474, 'miCKe', 'Michael Vu', 1),
     (86738694, 111474, 'qojqva', 'Maximilian Bröcker', 2),
     (77490514, 111474, 'Boxi', 'Samuel Svahn', 3),
     (401792574, 111474, 'Taiga', 'Tommy Le', 4),
     (54580962, 111474, 'iNSaNiA', 'Aydin Sarkohi', 5),
+
     (100471531, 350190, 'Jabz', 'Anucha Jirawong', 1),
     (154715080, 350190, 'Abed', 'Abed Azel Yusop', 2),
     (84772440, 350190, 'iceiceice', 'Daryl Koh Pei Xiang', 3),
     (102099826, 350190, 'Dj', 'Djardel Mampusti', 4),
     (145550466, 350190, 'DuBu', 'Kim Doo-young', 5),
+
     (412753955, 543897, 'Nikobaby', 'Nikolay Nikolov', 1),
     (113457795, 543897, 'Moon', 'Kam Boon Seng', 2),
     (87012746, 543897, 'kpii', 'Damien Chok', 3),
     (192914280, 543897, 'Bimbi', 'Ryan Jay Qui', 4),
     (91443418, 543897, 'ninjaboogie', 'Michael Ross Jr.', 5),
+
     (137193239, 726228, 'Paparazi', 'Zhang Chengjun', 1),
     (107803494, 726228, 'Ori', 'Zeng Jiaoyang', 2),
     (139937922, 726228, 'Yang', 'Zhou Haiyang', 3),
     (182331313, 726228, 'Fade', 'Pan Yi', 4),
     (143693439, 726228, 'Dy', 'Ding Cong', 5),
+
     (121769650, 1838315, 'Nisha', 'Michał Jankowski', 1),
     (116585378, 1838315, 'MidOne', 'Yeik Nai Zheng', 2),
     (73562326, 1838315, 'zai', 'Ludwig Wåhlberg', 3),
     (89117038, 1838315, 'YapzOr', 'Yazied Jaradat', 4),
     (87278757, 1838315, 'Puppey', 'Clement Ivanov', 5),
+
     (132851371, 1883502, 'RAMZES666', 'Roman Kushnarev', 1),
     (106573901, 1883502, 'No[o]ne', 'Vladimir Minenko', 2),
     (92423451, 1883502, '9pasha', 'Pavel Khvastunov', 3),
     (159020918, 1883502, 'RodjER', 'Vladimir Nikogosyan', 4),
     (134556694, 1883502, 'Solo', 'Alexei Berezin', 5),
+
     (152545459, 2108395, 'Gabbi', 'Kim Villafuerte', 1),
     (164532005, 2108395, 'Armel', 'Armel Paul Tabios', 2),
     (184950344, 2108395, 'Kuku', 'Carlo Palad', 3),
     (155494381, 2108395, 'Tims', 'Timothy Randrup', 4),
     (173476224, 2108395, 'eyyou', 'Nico Barcelon', 5),
+
     (311360822, 2586976, 'ana', 'Anathan Pham', 1),
     (94054712, 2586976, 'Topson', 'Topias Taavitsainen', 2),
     (88271237, 2586976, 'Ceb', 'Sébastien Debs', 3),
     (26771994, 2586976, 'JerAx', 'Jesse Vainikka', 4),
     (19672354, 2586976, 'N0tail', 'Johan Sundstein', 5),
+
     (135878232, 2626685, 'old chicken', 'Wang Zhiyong', 1),
     (255219872, 2626685, '一', 'Zhai Jingkai', 2),
     (134276083, 2626685, 'eLeVeN', 'Ren Yangwei', 3),
     (139876032, 2626685, 'Kaka', 'Hu Liangzhi', 4),
     (397462905, 2626685, 'dark', 'Song Runxi', 5),
+
     (164685175, 2672298, 'K1', 'Hector Antonio Rodriguez', 1),
     (153836240, 2672298, 'Chris Luck', 'Jean Pierre Gonzales', 2),
     (292921272, 2672298, 'Wisper', 'Adrian Cespedes Dobles', 3),
     (157989498, 2672298, 'Scofield', 'Elvis De la Cruz Peña', 4),
     (119631156, 2672298, 'Stinger', 'Steven Vargas', 5),
+
     (148215639, 6209804, 'Monet', 'Du Peng', 1),
     (139822354, 6209804, 'Setsu', 'Gao Zhenxiong', 2),
     (186627166, 6209804, 'Flyby', 'Su Lei', 3),
     (89423756, 6209804, 'LaNm', 'Zhang Zhicheng', 4),
     (119576842, 6209804, 'ah fu', 'Tue Soon Chuan', 5),
+
     (108452107, 6214538, 'YawaR', 'Yawar Hassan', 1),
     (221666230, 6214538, 'CCnC', 'Quinn Callahan', 2),
     (10366616, 6214538, 'Sneyking', 'Jingjun Wu', 3),
     (86726887, 6214538, 'MSS', 'Arif Anwar', 4),
     (6922000, 6214538, 'pieliedie', 'Johan Åström', 5),
+
     (97590558, 6214973, 'Ace', 'Marcus Hoelgaard', 1),
     (86799300, 6214973, 'Fata', 'Adrian Trinks', 2),
     (86698277, 6214973, '33', 'Neta Shapira', 3),
     (103735745, 6214973, 'Saksa', 'Martin Sazdov', 4),
     (86727555, 6214973, 'ppd', 'Peter Dager', 5),
+
     (142139318, 6666989, 'vtFαded', 'Cheng Jia Hao', 1),
     (72312627, 6666989, 'MATUMBAMAN', 'Lasse Urpalainen', 2),
     (169025618, 6666989, 'KheZu', 'Maurice Gutmann', 3),
