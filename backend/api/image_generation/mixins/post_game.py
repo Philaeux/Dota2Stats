@@ -105,7 +105,7 @@ class PostGameMixin:
                         if item is None:
                             short_name = 'error'
                         else:
-                            short_name = item.short_name
+                            short_name = item.name
                         item_path = os.path.join(self.assets_root, 'dota', 'item_rectangle', short_name + '.png')
                         if not os.path.exists(item_path):
                             item_path = os.path.join(self.assets_root, 'dota', 'item_rectangle', 'default.png')

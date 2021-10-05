@@ -18,8 +18,6 @@ class DotaItem(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(255), unique=True)
-    short_name = Column(String(255), unique=True)
-    display_name = Column(String(255), unique=True)
 
 
 class GroupStage(DeclarativeBase):
@@ -53,10 +51,8 @@ class DotaProPlayer(DeclarativeBase):
     __tablename__ = 'dota_pro_players'
 
     account_id = Column(BigInteger, primary_key=True)
-    team_id = Column(BigInteger)
     nickname = Column(String(255), nullable=False, default="")
     name = Column(String(255), nullable=False, default="")
-    position = Column(Integer, nullable=False,default=0)
 
 
 class DotaJoinGlobalHeroes(DeclarativeBase):
