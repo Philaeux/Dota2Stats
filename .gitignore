@@ -5,6 +5,8 @@ backend/.venv
 backend/api/assets/generated/*.png
 backend/api/assets/generated/*.json
 backend/api/__pycache__
+backend/api/image_generation/__pycache__
+backend/api/image_generation/mixins/__pycache__
 matlabstatstreaming/sql.mat
 matlabstatstreaming/*.asv
 
