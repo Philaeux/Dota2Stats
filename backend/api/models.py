@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, BigInteger, Column, String, Numeric
+from sqlalchemy import Integer, BigInteger, Column, String, Numeric, Boolean
 from tornado_sqlalchemy import declarative_base
 
 DeclarativeBase = declarative_base()
@@ -46,6 +46,7 @@ class DotaProTeam(DeclarativeBase):
 
     id = Column(BigInteger, primary_key=True)
     name = Column(String(255), nullable=False)
+    ti = Column(Boolean, nullable=False)
 
 
 class DotaProPlayer(DeclarativeBase):
